@@ -1,0 +1,26 @@
+Test Cases
+
+You shall create a collection of test cases that thoroughly tests your C Project Bamazon. You
+MUST create at least 20 test cases. When you create a test case, you shall state the purpose of
+the test case and the expected value. Running the test case creates the actual value, which you
+shall add to your test case description. The following are samples of the test case descriptions
+that are to be submitted.
+
+1. Invoke program with no filename
+Expected: File not found!
+Actual:
+$ ./bamazon
+File not found!
+
+2. Invoke program with a file that doesn't exist
+Expected: File not found!
+Actual:
+$ ./bamazon nofile.txt
+File not found!
+
+3. Invoke program with bamdata.txt and sign in as gusty
+Expected: Invalid user!
+Actual:
+$ ./bamazon bamdata.txt
+Enter user name: gusty
+Invalid user!

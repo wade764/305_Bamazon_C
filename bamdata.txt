@@ -1,0 +1,33 @@
+This file has a minimum of 28 items - 7 items of each category.
+
+Used for keeping tracks of the items in our current inventory. 
+
+Invoke the Bamazon Program via $ ./ bamazon file.txt , where file.txt is the
+database file. The database file is a text file with a sequence of lines, where each line
+defines a shopping item. Each line has the following format.
+
+Sample input file.
+
+ itemnum category item size quantity cost onsale
+
+1 clothes shirt m 10 10.0 100
+2 electronics computer x 3 100.0 100
+3 tools drill x 5 75.9 85
+4 toys barbie_doll x 13 4.35 90
+
+● itemnum - a unique number assigned to each shopping item. itemnum is an
+  integer.
+● category - the category of the shopping item which is one of the following:
+  clothes , electronics , tools , toys . category is a string .
+● name - the name of the item. Examples are shirt , computer , drill ,
+  barbie_doll , etc. name is a string with a maximum of 25 chars. name does not
+● contain spaces. Compound names must use some connecting character as
+  demonstrated by barbie_doll .
+
+● size - the size of the item . size is one of the characters s , m , l , x . For an item
+  that does not have a size, the value shall be x .
+● quantity - the number of items in the inventory.
+● cost - the retail cost of the item . cost is a double .
+● onsale - indicates whether the item is on sale. on_sale is an integer that
+represents the percentage of cost. For example, on_sale of 100 indicates the
+item is not on sale. on_sale of 50 indicates the item ’s cost is cost * .5
