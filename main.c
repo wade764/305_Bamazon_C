@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bamazon.h"
+//I'm just adding this as a test - Ethan
+
 
 // This allows the owner and shopper to enter commands that are described in requirements 11 and 12
 
