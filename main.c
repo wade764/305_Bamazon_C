@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bamazon.h"
-//I'm just adding this as a test - Ethan
-
+//I'm just adding this as a test - Ethan, hello there
 
 // This allows the owner and shopper to enter commands that are described in requirements 11 and 12
 
@@ -57,5 +56,14 @@
 //      g. Any other command results in the message Invalid command!
 
 int main() {
-
+    // we need to open a scanf to allow the user to enter commands
+    int response;
+    printf("Please select from the following options\n");
+    printf("1. Add an item to DB\n");
+    printf("2. Delete Item (item number)\n");
+    printf("3. Update item cost (item number)\n");
+    printf("4. Update item quantity\n");
+    printf("5. Save DB 6. Quit program\n");
+    printf(": ");
+    scanf("%d",&response);
 }
