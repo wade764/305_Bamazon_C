@@ -59,11 +59,56 @@ int main() {
     // we need to open a scanf to allow the user to enter commands
     int response;
     printf("Please select from the following options\n");
-    printf("1. Add an item to DB\n");
-    printf("2. Delete Item (item number)\n");
-    printf("3. Update item cost (item number)\n");
-    printf("4. Update item quantity\n");
-    printf("5. Save DB 6. Quit program\n");
+    printf("1. Add an item to DB\n"); //add itemnum temcategory itemname size quantity cost onsale
+    printf("2. Delete Item (item number)\n"); //delete itemnum
+    printf("3. Update item cost (item number)\n"); //updatecost itemnum cost
+    printf("4. Update item quantity\n"); //updatequantity itemnum quantity
+    printf("5. Save DB\n"); // save does not quit
+    printf("6. Quit program\n"); // quit without saving
+
+    // using a switch statement to evaluate commands
+    // labeled loop used to continue prompt until a valid entry
+Here:
+    // must have the print here you can not combine the scanner like below
+    //scanf(":%d",&response); this goes into a loop
     printf(": ");
     scanf("%d",&response);
+    // if you put anything other than in int here it will go into an infinite loop
+
+    switch(response) {
+        case 1:
+
+            break;
+        case 2:
+
+            break;
+        case 3:
+
+            break;
+        case 4:
+
+            break;
+        case 5:
+
+            break;
+        case 6:
+            printf("Exit the program without saving? y/n\n");
+            char quit;
+            printf(": ");
+            scanf("%c",&quit);
+            printf("%d %c %d\n",quit, 'y', 'y');
+            if (quit == 'y'/* || 'Y'*/) {
+            //if (quit != 'y'/* || 'Y'*/) {
+                //goto Here;
+                exit(0);
+            } else {
+                //exit(0);
+                goto Here;
+            }
+            break;
+        default:
+            printf("Please enter a valid number.\n");
+            goto Here;
+    }
+
 }
