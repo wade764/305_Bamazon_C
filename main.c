@@ -64,11 +64,12 @@ int main() {
     printf("3. Update item cost (item number)\n"); //updatecost itemnum cost
     printf("4. Update item quantity\n"); //updatequantity itemnum quantity
     printf("5. Save DB\n"); // save does not quit
-    printf("6. Quit program\n"); // quit without saving
+    printf("6. Quit program without saving\n"); // quit without saving
 
     // using a switch statement to evaluate commands
     // labeled loop used to continue prompt until a valid entry
 Here:
+//Here2:
     // must have the print here you can not combine the scanner like below
     //scanf(":%d",&response); this goes into a loop
     printf(": ");
@@ -92,19 +93,24 @@ Here:
 
             break;
         case 6:
-            printf("Exit the program without saving? y/n\n");
-            char quit;
-            printf(": ");
-            scanf("%c",&quit);
-            printf("%d %c %d\n",quit, 'y', 'y');
-            if (quit == 'y'/* || 'Y'*/) {
-            //if (quit != 'y'/* || 'Y'*/) {
-                //goto Here;
-                exit(0);
-            } else {
-                //exit(0);
-                goto Here;
-            }
+            exit(0);
+
+            // Trying to prompt the user if the are sure is buggy
+
+            //printf("Exit the program without saving? y/n\n");
+            //char quit;
+            ////printf(": ");
+            //scanf("%c",&quit);
+            ////printf("%d %c %d\n",quit, 'y', 'y');
+            //if (quit == 'y') {
+            ////if (quit != 'y'/* || 'Y'*/) {
+            //    //goto Here;
+            //    exit(0);
+            //} else {
+            //    printf("else loop\n");
+            //    //exit(0);
+            //    goto Here2;
+            //}
             break;
         default:
             printf("Please enter a valid number.\n");
