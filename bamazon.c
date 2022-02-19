@@ -5,6 +5,9 @@
 
 // This is the internal data structure. The
 // database file is read into this data structure. It is an array of pointers to item .
+
+
+
 static item *db[MAX_ITEMS];
 
 // This is the number of items in the internal data
