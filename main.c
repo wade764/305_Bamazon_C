@@ -72,7 +72,7 @@ Here:
 //Here2:
     // must have the print here you can not combine the scanner like below
     //scanf(":%d",&response); this goes into a loop
-    printf(": ");
+    //printf(": ");
     scanf("%d",&response);
     // if you put anything other than in int here it will go into an infinite loop
 
