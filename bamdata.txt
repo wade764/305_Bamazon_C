@@ -1,33 +1,36 @@
-This file has a minimum of 28 items - 7 items of each category.
-
-Used for keeping tracks of the items in our current inventory. 
-
-Invoke the Bamazon Program via $ ./ bamazon file.txt , where file.txt is the
-database file. The database file is a text file with a sequence of lines, where each line
-defines a shopping item. Each line has the following format.
-
-Sample input file.
-
- itemnum category item size quantity cost onsale
-
-1 clothes shirt m 10 10.0 100
-2 electronics computer x 3 100.0 100
-3 tools drill x 5 75.9 85
-4 toys barbie_doll x 13 4.35 90
-
-● itemnum - a unique number assigned to each shopping item. itemnum is an
-  integer.
-● category - the category of the shopping item which is one of the following:
-  clothes , electronics , tools , toys . category is a string .
-● name - the name of the item. Examples are shirt , computer , drill ,
-  barbie_doll , etc. name is a string with a maximum of 25 chars. name does not
-● contain spaces. Compound names must use some connecting character as
-  demonstrated by barbie_doll .
-
-● size - the size of the item . size is one of the characters s , m , l , x . For an item
-  that does not have a size, the value shall be x .
-● quantity - the number of items in the inventory.
-● cost - the retail cost of the item . cost is a double .
-● onsale - indicates whether the item is on sale. on_sale is an integer that
-represents the percentage of cost. For example, on_sale of 100 indicates the
-item is not on sale. on_sale of 50 indicates the item ’s cost is cost * .5
+1 clothes blue_jeans l 10 10.99 75
+2 clothes t_shirt x 30 5.99 100
+3 clothes hat m 15 12.36 100
+4 clothes skirt s 20 14.75 100
+5 clothes sneakers x 10 27.0 50
+6 clothes shorts l 12 14.99 90
+7 clothes pajamas m 40 17.99 75
+8 electronics calculator x 33 24.99 100
+9 electronics laptop x 14 559.70 90
+10 electronics nintendo_switch x 3 350.0 100
+11 electronics microwave x 4 257.23 100
+12 electronics kitchen_mixer x 7 80.75 80
+13 electronics tv x 6 699.99 75
+14 tools cross_tip_screwdriver x 45 3.0 100
+15 tools hammer x 32 15.0 75
+16 tools saw x 36 24.0 75
+17 toys hotwheels x 14 0.99 50
+18 toys barbie x 24 20.0 100
+19 toys legos x 13 35.0 100
+20 toys paddle_ball x 6 1.0 100
+21 clothes jacket x 24 37.99 90
+22 clothes boots s 12 45.0 85
+23 clothes baby_clothes m 34 12.99 85
+24 electronics keyboard x 15 100.0 85
+25 electronics mouse x 16 45.0 70
+26 electronics monitor x 4 376.75 70
+27 electronics hard_drive x 6 97.99 90
+28 electronics usb_cable x 28 13.0 100
+30 toys yo_yo x 24 3.99 100
+31 toys football x 16 14.0 100
+32 toys baseball_bat x 17 17.0 90
+33 toys kids_bike x 3 200.0 100
+34 tools wrench x 47 5.0 90
+35 tools step_stool x 12 34.99 100
+36 tools ladder x 27 75.0 75
+37 tools toolbox x 18 123.45 90

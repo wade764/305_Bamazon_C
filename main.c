@@ -59,23 +59,23 @@
 void deleteItem (int itemNum)// 11. b.
 {
 
-//need to design data structure before this.
+    //need to design data structure before this.
 
 }
 
 void save () //11. e.
 {
-File *f;
-f=fopen("output.txt", "w");
-if(f==null)
-{
-    printf("Error opening file!\n")
-    exit(0);
-}
+    //File *f;
+    //f=fopen("output.txt", "w");
+    //if(f==null)
+    //{
+    //    printf("Error opening file!\n")
+    //        exit(0);
+    //}
 
-//print contents after this.
+    ////print contents after this.
 
-fprint("printing to file now.\n");
+    //fprint("printing to file now.\n");
 
 
 }
@@ -92,14 +92,14 @@ int main() {
 
     // using a switch statement to evaluate commands
     // labeled loop used to continue prompt until a valid entry
-Here:
-//Here2:
+    //Here2:
     // must have the print here you can not combine the scanner like below
     //scanf(":%d",&response); this goes into a loop
     //printf(": ");
     scanf("%d",&response);
     // if you put anything other than in int here it will go into an infinite loop
 
+Here:
     switch(response) {
         case 1:
 
@@ -117,6 +117,7 @@ Here:
 
             break;
         case 6:
+            // Stuck trying to make this more than just an exit, but it works
             exit(0);
 
             // Trying to prompt the user if the are sure is buggy
@@ -124,16 +125,17 @@ Here:
             //printf("Exit the program without saving? y/n\n");
             //char quit;
             ////printf(": ");
-            //scanf("%c",&quit);
-            ////printf("%d %c %d\n",quit, 'y', 'y');
-            //if (quit == 'y') {
-            ////if (quit != 'y'/* || 'Y'*/) {
-            //    //goto Here;
+            //scanf("%c\n",&quit);
+            //printf("%d %c %d\n",quit, 'y', 'y');
+            //if (strcmp('y',quit) == 0) {
+            //////if (quit != 'y'/* || 'Y'*/) {
+            ////    //goto Here;
             //    exit(0);
-            //} else {
+            //}
+            //} else if (quit != 'y'){
             //    printf("else loop\n");
             //    //exit(0);
-            //    goto Here2;
+                //goto Here;
             //}
             break;
         default:
@@ -141,4 +143,4 @@ Here:
             goto Here;
     }
 
-}
+    }
