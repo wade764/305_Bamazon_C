@@ -55,6 +55,30 @@
 
 //      g. Any other command results in the message Invalid command!
 
+
+void deleteItem (int itemNum)// 11. b.
+{
+
+//need to design data structure before this.
+
+}
+
+void save () //11. e.
+{
+File *f;
+f=fopen("output.txt", "w");
+if(f==null)
+{
+    printf("Error opening file!\n")
+    exit(0);
+}
+
+//print contents after this.
+
+fprint("printing to file now.\n");
+
+
+}
 int main() {
     // we need to open a scanf to allow the user to enter commands
     int response;
