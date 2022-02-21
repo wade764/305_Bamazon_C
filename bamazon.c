@@ -5,9 +5,6 @@
 
 // This is the internal data structure. The
 // database file is read into this data structure. It is an array of pointers to item .
-
-
-
 static item *db[MAX_ITEMS];
 
 // This is the number of items in the internal data
@@ -33,9 +30,9 @@ int read_db(char *filename) {
     if (filename != NULL) {
         //*** HERE I am not certain I am reading in the data with the correct format specifier
 
-        while (fscanf(fin, "%d %p %p %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) {
-            //fprintf(stdout,"Part - Name: %s, Number: %d Cost: $%.2lf\n", name, number, cost);
-            //fprintf(fout, "Part - Name: %s, Number: %d Cost: $%.2lf\n", name, number, cost);
+        while (fscanf(fin, "%d %p %p %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) {            
+
+
             i++;
         }
         fclose(fin);
@@ -48,6 +45,20 @@ int read_db(char *filename) {
 // database filename. Returns 0 on success and -1 on failure.
 int write_db(char *filename) {
     FILE *fout = fopen(filename, "w+"); 
+    if(filename!=NULL){
+
+        //increments through the item pointer array and prints them.
+        int i = 0;
+        while(&db[i]!=NULL)//does this need to be "while(**items)"???
+        {
+            fprintf(fout, "%d %p %p %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale)
+                i++;
+        }
+
+        fclose(fout);//close when done!
+        return 0;
+
+    }
 }
 // Prints all items in the internal data structure to the
 // terminal. The following is a sample display.
@@ -56,7 +67,19 @@ int write_db(char *filename) {
 // 2 electronics computer x 3 100.000000 100
 // 3 tools drill x 5 75.900000 85
 // 4 toys barbie_doll x 13 4.350000 90
-void show_items();
+void show_items(){
+
+
+        while(&db[i]!=NULL)
+        {
+            printf("%d %p %p %c %d %lf %d \n", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale)
+                i++;
+        }
+
+
+    //loop through list of pointers to items,
+    //print each one.
+}
 
 // Prints the value of item *c to the
 // string *s. Returns the number of characters in s.
@@ -67,7 +90,18 @@ int sprint_item(char *s, item *c);
 
 // Returns the an item* of itemnum .
 // Returns 0 if itemnum is not in the internal data structure.
-item *find_item_num(int itemnum);
+item *find_item_num(int itemnum)
+{
+
+        while(&db[i]!=NULL)
+        {
+               
+            if(&db[i]->itemnum==itemnum){return db[i];}
+            i++;
+        }
+
+    return 0;
+}
 
 // Fills in the *item[] with
 // items where each element contains the string *s . Returns the number of
