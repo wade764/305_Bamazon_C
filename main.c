@@ -63,23 +63,82 @@ void deleteItem (int itemNum)// 11. b.
 
 }
 
-void save () //11. e.
+FILE* save (FILE *fout) //11. e.
 {
-    //File *f;
-    //f=fopen("output.txt", "w");
-    //if(f==null)
+    //FILE *f;
+
+    //fout = fopen("output.txt", "w");
+    //
+    //// theres something funky here below
+    //if(fout == null)
     //{
-    //    printf("Error opening file!\n")
+    //    printf("Error opening file!\n");
     //        exit(0);
     //}
 
     ////print contents after this.
-
     //fprint("printing to file now.\n");
 
+    //return fout;
 
 }
-int main() {
+
+int main(int argc, char **argv) {
+
+    char* inputFile;
+    // making sure the program has a file as its 2nd command
+    if (argc == 1) { // The database file is missing
+        printf("File not found!\n");
+        exit(1);
+    } else if (argc > 2) { // The number of arguments is too long
+        printf("File not found!\n");
+        exit(2);
+    } else if (argc == 2) {
+        //printf("The database provided is called %s\n", argv[1]);
+        inputFile = argv[1];
+    }
+
+    int canRead = read_db(inputFile);
+    // test
+    printf("0 is good, -1 is bad: %d\n",canRead);
+    // this should print if the data base can not be read
+    if (canRead) {
+        printf("File not found!");
+    }
+
+    // First prompt is Enter user name:
+    char userName[20];
+    // This can only use letters and numbers NO SPACES!
+    printf("Enter user name: ");
+    scanf("%20s",&userName);
+    printf("\n");
+
+    // Test
+    printf("This is user name: ");
+    for (int i = 0; userName[i] != '\0'; i++) {
+        printf("%c", userName[i]);
+    }
+    printf("\n");
+
+
+
+
+    //FILE *fin = fopen(argv[1], "r");
+    //FILE *fout = fopen(argv[1], "w+");
+
+    //int number, count = 0;
+    //char name[50];
+    //double cost;
+    //fprintf(fout, "Parts in Database\n");
+    //while (fscanf(fin, "%s %d %lf", name, &number, &cost) != EOF) {
+    //fprintf(stdout,"Part - Name: %s, Number: %d Cost: $%.2lf\n", name, number, cost);
+    //fprintf(fout, "Part - Name: %s, Number: %d Cost: $%.2lf\n", name, number, cost);
+    //count++; // count lines read
+    //}
+    //fclose(fin);
+    //fclose(fout);
+    //return 0;    
+
     // we need to open a scanf to allow the user to enter commands
     int response;
     printf("Please select from the following options\n");
@@ -135,7 +194,7 @@ Here:
             //} else if (quit != 'y'){
             //    printf("else loop\n");
             //    //exit(0);
-                //goto Here;
+            //goto Here;
             //}
             break;
         default:
@@ -143,4 +202,4 @@ Here:
             goto Here;
     }
 
-    }
+}

@@ -25,12 +25,30 @@ static int purchased_items = 0;
 
 // Reads the database filename into the
 // internal data structure. Returns 0 on success and -1 on failure.
-int read_db(char *filename);
+int read_db(char *filename) {
+    FILE *fin = fopen(filename, "r");
+    int i = 0;
+    // thinking how I can determine if the file can be opended or not
+
+    if (filename != NULL) {
+        //*** HERE I am not certain I am reading in the data with the correct format specifier
+
+        while (fscanf(fin, "%d %p %p %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) {
+            //fprintf(stdout,"Part - Name: %s, Number: %d Cost: $%.2lf\n", name, number, cost);
+            //fprintf(fout, "Part - Name: %s, Number: %d Cost: $%.2lf\n", name, number, cost);
+            i++;
+        }
+        fclose(fin);
+        return 0;
+    } else
+        return -1;
+}
 
 // Writes the internal data structure to the
 // database filename. Returns 0 on success and -1 on failure.
-int write_db(char *filename);
-
+int write_db(char *filename) {
+    FILE *fout = fopen(filename, "w+"); 
+}
 // Prints all items in the internal data structure to the
 // terminal. The following is a sample display.
 
@@ -64,7 +82,7 @@ int find_item_str(item **items, char *s);
 // data structure. If itemnum is already in the internal data structure, the values of
 // itemnum are updated; otherwise a new item is added.
 item *add_item(int itemnum, char *category, char *name, char size,
-int quantity, double cost, int onsale);
+        int quantity, double cost, int onsale);
 
 // Fills in the *item[] with
 // items where each element is category c . Returns the number of elements in
