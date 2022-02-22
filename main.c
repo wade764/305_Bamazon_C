@@ -79,7 +79,7 @@ FILE* save (FILE *fout) //11. e.
     ////print contents after this.
     //fprint("printing to file now.\n");
 
-    //return fout;
+    return fout;
 
 }
 
@@ -99,42 +99,47 @@ int main(int argc, char **argv) {
     }
 
     int canRead = read_db(inputFile);
+
     // test
     printf("0 is good, -1 is bad: %d\n",canRead);
+
     // this should print if the data base can not be read
     if (canRead) {
         printf("File not found!");
     }
 
     // valid users
-    char admin[] = {"bamazon"};
-    char shopper[] = {"shopper"};
-
-
+    char admin[] = "bamazon";
+    char shopper[] = "shopper";
 
     // First prompt is Enter user name:
-    char userName[15];
+    char userName[8];
     // This can only use letters and numbers NO SPACES!
     printf("Enter user name (bamazon or shopper): ");
-    scanf("%s",&userName);
+    //printf("Enter user name: ");
+    fgets(userName,8,stdin);
     printf("\n");
 
     // Test
-    printf("This is user name: ");
-    for (int i = 0; userName[i] != '\0'; i++) {
-        printf("%c", userName[i]);
-    }
-    printf("\n");
+    //printf("This is user name: %s\n",userName);
 
-    int validUser1 = 0;
-    int validUser2 = 0;
-    for (int i = 0; userName[i] != '\0'; i++) {
-        validUser1 += strcmp(userName[i], admin[i]);
-        validUser2 += strcmp(userName[i], admin[i]);
-    }
+    int validUser1 = strcmp(userName, admin);
+    int validUser2 = strcmp(userName, shopper);
+    //printf("strcmp admin: %d shopper: %d\n",validUser1,validUser2);
 
-    if (!validUser1 || !validUser2) {
+    // strcmp returns anything other than 0 it will exit
+    if (!validUser1) {
+        // validUser1 == 0 so it is the admin account
+    } else if (!validUser2) {
+        // validUser2 == 0  so it is the shopper account
+    } else if (validUser1) {
+        // not a valid user
         printf("Invalid user!\n");
+        exit(3);
+    } else if (validUser2) {
+        // not a valid user
+        printf("Invalid user!\n");
+        exit(3);
     }
 
 

@@ -12,7 +12,7 @@ typedef struct {
         int quantity;
         double cost;
         int onsale;
-        } item;
+} item;
 
 int read_db(char *filename);
 
