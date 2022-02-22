@@ -130,8 +130,12 @@ int main(int argc, char **argv) {
     // strcmp returns anything other than 0 it will exit
     if (!validUser1) {
         // validUser1 == 0 so it is the admin account
+        // now we need to move to the admin commands
+
     } else if (!validUser2) {
         // validUser2 == 0  so it is the shopper account
+        // now we need to move to the shopper commands
+
     } else if (validUser1) {
         // not a valid user
         printf("Invalid user!\n");
@@ -141,9 +145,8 @@ int main(int argc, char **argv) {
         printf("Invalid user!\n");
         exit(3);
     }
-
-
-
+    
+    // commented out code from Module C pdf pg 85
 
     //FILE *fin = fopen(argv[1], "r");
     //FILE *fout = fopen(argv[1], "w+");

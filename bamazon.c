@@ -37,8 +37,15 @@ int read_db(char *filename) {
         printf("In read_db 3\n");
         //*** HERE I am not certain I am reading in the data with the correct format specifier
         //itemnum(int) category(char[]) item(char[]) size(char) quantity(int) cost(double) onsale(int)  
+        
         //        while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
-        while (fscanf(fin, "%d[' '] %d[' '] %s[' '] %c[' '] %d[' '] %lf[' '] %d['\n']", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
+        
+        char cat[20];
+        while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, cat, db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
+            
+            if (strcmp(cat, "toys") == 0) {
+                db[i]->category = toys;
+            }
 
             printf("In read_db in while here is i: %d\n",i);
             i++;
@@ -48,8 +55,9 @@ int read_db(char *filename) {
 
         fclose(fin);
         return 0;
-    } else
+    } else {
         return -1;
+    }
     }
 
     // Writes the internal data structure to the

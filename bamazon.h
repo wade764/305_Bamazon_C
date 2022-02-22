@@ -4,6 +4,8 @@
 
 typedef enum { clothes, electronics, tools, toys } category;
 
+//typedef enum { clothes = 10, electronics, tools, toys } category;
+
 typedef struct {
         int itemnum;
         category category;
