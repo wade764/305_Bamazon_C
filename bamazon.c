@@ -26,35 +26,27 @@ static int purchased_items = 0;
 // internal data structure. Returns 0 on success and -1 on failure.
 int read_db(char *filename, int numLines) {
 
-    printf("In read_db\n");
+    //printf("In read_db\n");
 
     FILE *fin = fopen(filename, "r"); // open for reading
-    //int i = 0;
 
-    // thinking how I can determine if the file can be opended or not
-
-    printf("In read_db 2\n");
+    //printf("In read_db 2\n");
 
     if (filename != NULL) {
 
-        printf("In read_db 3\n");
-        //*** HERE I am not certain I am reading in the data with the correct format specifier
-        //itemnum(int) category(char[]) item(char[]) size(char) quantity(int) cost(double) onsale(int)  
+        //printf("In read_db 3\n");
 
-        //        while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
+        //itemnum(int) category(char[]) name(char[]) size(char) quantity(int) cost(double) onsale(int)  
 
-        // temp holder for category and name
+        // temp holder for category
         char cat[20];
-        //MAX_ITME_CHARS = 32
-
-        //char nam[MAX_ITEM_CHARS];
 
         for (int i = 0; i < numLines; i++) {
             // instantiating a new db object for each line of the file
             db[i] = malloc(sizeof(item));
             num_items++;
 
-            while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, cat, db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
+            while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, cat, db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF){ 
 
                 if (strcmp(cat, "clothes") == 0) {
                     db[i]->category = clothes;
@@ -72,134 +64,173 @@ int read_db(char *filename, int numLines) {
                     exit(5);
                 }
 
-                //db[i]->name = nam;
-
-                printf("In read_db in while here is i: %d\n",i);
+                //printf("In read_db in while here is i: %d\n",i);
             }
         }
-
-        printf("about to return in read_db\n");
+        //printf("about to return in read_db\n");
 
         fclose(fin);
         return 0;
     } else {
         return -1;
     }
-    }
+}
 
-    // Writes the internal data structure to the
-    // database filename. Returns 0 on success and -1 on failure.
+// Writes the internal data structure to the
+// database filename. Returns 0 on success and -1 on failure.
 
-    // *** see pg 85 of textbook for fopen modes
-    int write_db(char *filename) {
-        FILE *fout = fopen(filename, "w+"); // w+ Open for reading and writing, but file is overwritten if exists. 
-        if(filename!=NULL){
+// *** see pg 85 of textbook for fopen modes
+int write_db(char *filename) {
 
-            //increments through the item pointer array and prints them.
-            int i = 0;
-            while(&db[i]!=NULL)//does this need to be "while(**items)"???
-            {
-                fprintf(fout, "%d %p %p %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale);
-                i++;
-            }
+    FILE *fout = fopen(filename, "a"); // w+ Open for reading and writing, but file is overwritten if exists. 
+    // 'a' appends to the end of the file
 
-            fclose(fout);//close when done!
+    if(filename!=NULL){
+        // adding a new item to the database
+        db[++num_items] = malloc(sizeof(item));
 
-        }
+        //itemnum(int) category(char[]) name(char[]) size(char) quantity(int) cost(double) onsale(int)  
+        int numWritten = 0;
+
+        int itemN;
+        char cat[20];
+        char nam[MAX_ITEM_CHARS];
+        char siz;
+        int quan;
+        double doub;
+        int sale;
+        // max num of items is 300 so max it should scan is 3
+        //fscanf(filename, 3, &db[num_items]->itemnum);
+        numWritten += scanf("%d", &itemN);
+        // this is the enum *** not sure on the number of characters to limit
+        //fscanf(filename, 15, &db[num_items]->category);
+        numWritten += scanf("%s", cat);
+        // this is the name of the item limited to 32 characters
+        //fscanf(filename, 32, &db[num_items]->name);
+        numWritten += scanf("%s", nam);
+        // single char for size, if item doesnt have a size it is x by default
+        //fscanf(filename, 1, &db[num_items]->size);
+        numWritten += scanf("%c", &siz);
+        // no specification for quantity limit and cost
+        //fscanf(filename, 10, &db[num_items]->quantity);
+        numWritten += scanf("%d", &quan);
+        //fscanf(filename, 20, &db[num_items]->cost);
+        numWritten += scanf("%lf", &doub);
+        // this is limited to 3 because it is a percentage 100 is full price 75 is 25% off the item
+        //fscanf(filename, 3, &db[num_items]->onsale);
+        numWritten += scanf("%d", &sale);
+
+        fscanf(fout, "%d %s %s %c %d %lf %d", &itemN, cat, nam, &siz, &quan, &doub, &sale);
+
+        //increments through the item pointer array and prints them.
+        //int i = 0;
+        //while(&db[i]!=NULL)//does this need to be "while(**items)"???
+        // no the database is an array of pointers to item
+        //{
+        //fprintf(fout, "%d %p %p %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale);
+        //i++;
+        //}
+
+        fclose(fout);//close when done!
+
         return 0;
+    } else {
+        // The file was not written sucessfully...
+        return -1;
     }
-    // Prints all items in the internal data structure to the
-    // terminal. The following is a sample display.
+}
+// Prints all items in the internal data structure to the
+// terminal. The following is a sample display.
 
-    // 1 clothes shirt m 10 10.000000 100
-    // 2 electronics computer x 3 100.000000 100
-    // 3 tools drill x 5 75.900000 85
-    // 4 toys barbie_doll x 13 4.350000 90
-    void show_items(){
+// 1 clothes shirt m 10 10.000000 100
+// 2 electronics computer x 3 100.000000 100
+// 3 tools drill x 5 75.900000 85
+// 4 toys barbie_doll x 13 4.350000 90
+void show_items(){
 
-        int i = 0;
-        while(&db[i]!=NULL)
-        {
-            printf("%d %p %p %c %d %lf %d \n", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale);
-            i++;
-        }
-
-
-        //loop through list of pointers to items,
-        //print each one.
-    }
-
-    // Prints the value of item *c to the
-    // string *s. Returns the number of characters in s.
-    // char s[100];
-    // sprint_item(s, find_item_num(2));
-    // printf(“%s\n”, s); // prints
-    int sprint_item(char *s, item *c);
-
-    // Returns the an item* of itemnum .
-    // Returns 0 if itemnum is not in the internal data structure.
-    item *find_item_num(int itemnum)
+    int i = 0;
+    while(&db[i]!=NULL)
     {
-        int i = 0;
-        while(&db[i]!=NULL)
-        {
-
-            if(db[i]->itemnum==itemnum){return db[i];}
-            i++;
-        }
-
-        return 0;
+        printf("%d %p %p %c %d %lf %d \n", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale);
+        i++;
     }
 
-    // Fills in the *item[] with
-    // items where each element contains the string *s . Returns the number of
-    // elements in items .
-    // item *items[5];
-    // find_item_str(items, “o”); // items contains the following
-    // 2 electronics computer x 3 100.000000 100
-    // 4 toys barbie_doll x 13 4.350000 90
-    int find_item_str(item **items, char *s);
 
-    // Adds an item to the internal
-    // data structure. If itemnum is already in the internal data structure, the values of
-    // itemnum are updated; otherwise a new item is added.
-    item *add_item(int itemnum, char *category, char *name, char size,
-            int quantity, double cost, int onsale);
+    //loop through list of pointers to items,
+    //print each one.
+}
 
-    // Fills in the *item[] with
-    // items where each element is category c . Returns the number of elements in
-    // items .
-    int get_category(item **items, category c);
+// Prints the value of item *c to the
+// string *s. Returns the number of characters in s.
+// char s[100];
+// sprint_item(s, find_item_num(2));
+// printf(“%s\n”, s); // prints
+int sprint_item(char *s, item *c);
 
-    // Fills in
-    // the *item[] with items where each element is category c and size . Returns
-    // the number of elements in items .
-    int get_category_size(item **items, category c, char size);
+// Returns the an item* of itemnum .
+// Returns 0 if itemnum is not in the internal data structure.
+item *find_item_num(int itemnum)
+{
+    int i = 0;
+    while(&db[i]!=NULL)
+    {
 
-    // Fills
-    // in the *item[] with items where each element is category c and less than cost .
-    // Returns the number of elements in items .
-    int get_category_cost(item **items, category c, double cost);
+        if(db[i]->itemnum==itemnum){return db[i];}
+        i++;
+    }
 
-    // Returns item* of itemnum . The
-    // quantity of item* in the internal data structure is decremented. Returns 0 if
-    // itemnum is not in the internal data structure. purchase places the purchased
-    // item in the array purchased and increments the variable purchased_items .
-    item *purchase_item(int itemnum);
+    return 0;
+}
 
-    // Returns item* of itemnum . The item* is
-    // deleted from the internal data structure. Returns 0 if itemnum is not in the internal
-    // data structure.
-    item *delete_item(int itemnum);
+// Fills in the *item[] with
+// items where each element contains the string *s . Returns the number of
+// elements in items .
+// item *items[5];
+// find_item_str(items, “o”); // items contains the following
+// 2 electronics computer x 3 100.000000 100
+// 4 toys barbie_doll x 13 4.350000 90
+int find_item_str(item **items, char *s);
 
-    // Fills in the *receipt[] with strings of all
-    // the items purchased, which are in the array purchased . Returns the number of
-    // elements in items . checkout assigns the variable purchased_items to 0.
-    int checkout(char **receipt);
+// Adds an item to the internal
+// data structure. If itemnum is already in the internal data structure, the values of
+// itemnum are updated; otherwise a new item is added.
+item *add_item(int itemnum, char *category, char *name, char size,
+        int quantity, double cost, int onsale);
 
-    // converts c to a string.
-    // category_to_str mallocs memory for the resulting string.
-    char *category_to_str(category c);
+// Fills in the *item[] with
+// items where each element is category c . Returns the number of elements in
+// items .
+int get_category(item **items, category c);
 
-    // converts the string s to a category .
-    category str_to_category(char *s);
+// Fills in
+// the *item[] with items where each element is category c and size . Returns
+// the number of elements in items .
+int get_category_size(item **items, category c, char size);
+
+// Fills
+// in the *item[] with items where each element is category c and less than cost .
+// Returns the number of elements in items .
+int get_category_cost(item **items, category c, double cost);
+
+// Returns item* of itemnum . The
+// quantity of item* in the internal data structure is decremented. Returns 0 if
+// itemnum is not in the internal data structure. purchase places the purchased
+// item in the array purchased and increments the variable purchased_items .
+item *purchase_item(int itemnum);
+
+// Returns item* of itemnum . The item* is
+// deleted from the internal data structure. Returns 0 if itemnum is not in the internal
+// data structure.
+item *delete_item(int itemnum);
+
+// Fills in the *receipt[] with strings of all
+// the items purchased, which are in the array purchased . Returns the number of
+// elements in items . checkout assigns the variable purchased_items to 0.
+int checkout(char **receipt);
+
+// converts c to a string.
+// category_to_str mallocs memory for the resulting string.
+char *category_to_str(category c);
+
+// converts the string s to a category .
+category str_to_category(char *s);
