@@ -54,7 +54,32 @@
 //      database by adding, deleting, and updating items.
 
 //      g. Any other command results in the message Invalid command!
+int lineCount( char *filename) {
+    // The following code was modified from the source below
+    // https://www.tutorialspoint.com/c-program-to-count-the-number-of-lines-in-a-file
 
+    //#include<iostream>
+    //using namespace std;
+    //#define FILENAME "test.txt"
+    char ch;
+    int linesCount=0;
+    //open file in read more
+    FILE *fp = fopen(filename, "r");
+    if(fp == NULL) {
+        printf("File \"%s\" does not exist!!!\n",filename);
+        return -1;
+    }
+    //read character by character and check for new line
+    while((ch = fgetc(fp))!=EOF) {
+        if(ch == '\n')
+            linesCount++;
+    }
+    //close the file
+    fclose(fp);
+    //print number of lines
+    printf("Total number of lines are: %d\n",linesCount);
+    return 0;
+}
 
 void deleteItem (int itemNum)// 11. b.
 {
@@ -98,7 +123,14 @@ int main(int argc, char **argv) {
         inputFile = argv[1];
     }
 
-    int canRead = read_db(inputFile);
+    int numLines = lineCount(inputFile);
+    // There was an issue reading the number of lines so the program exits
+    if (numLines) {
+        exit(6);
+    }
+
+    // passing the file pointer and the number of lines in the program
+    int canRead = read_db(inputFile, numLines);
 
     // test
     printf("0 is good, -1 is bad: %d\n",canRead);
@@ -145,7 +177,7 @@ int main(int argc, char **argv) {
         printf("Invalid user!\n");
         exit(3);
     }
-    
+
     // commented out code from Module C pdf pg 85
 
     //FILE *fin = fopen(argv[1], "r");

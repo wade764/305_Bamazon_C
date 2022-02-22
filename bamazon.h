@@ -2,8 +2,12 @@
 #define MAX_ITEM_CHARS 32
 #define MAX_PURCHASE 10
 
+// In an enum the compiler reads the variables as int, with an index
+// so clothes is 0, electronics is 1, etc...
 typedef enum { clothes, electronics, tools, toys } category;
 
+// You can declare the value as below
+// in this case electronics = 11, tools = 12, etc...
 //typedef enum { clothes = 10, electronics, tools, toys } category;
 
 typedef struct {
@@ -16,7 +20,8 @@ typedef struct {
         int onsale;
 } item;
 
-int read_db(char *filename);
+// modified this to take the number of lines in the file
+int read_db(char *filename, int numLines);
 
 int write_db(char *filename);
 

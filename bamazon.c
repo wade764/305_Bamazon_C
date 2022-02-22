@@ -5,6 +5,7 @@
 
 // This is the internal data structure. The
 // database file is read into this data structure. It is an array of pointers to item .
+// MAX_ITEMS = 300
 static item *db[MAX_ITEMS];
 
 // This is the number of items in the internal data
@@ -13,6 +14,7 @@ static int num_items = 0;
 
 // This data structure contains the
 // items purchased by a shopper.
+// MAX_PURCHASE = 10
 static item *purchased[MAX_PURCHASE];
 
 // This is the number of items purchased.
@@ -22,12 +24,13 @@ static int purchased_items = 0;
 
 // Reads the database filename into the
 // internal data structure. Returns 0 on success and -1 on failure.
-int read_db(char *filename) {
+int read_db(char *filename, int numLines) {
 
     printf("In read_db\n");
 
     FILE *fin = fopen(filename, "r"); // open for reading
-    int i = 0;
+    //int i = 0;
+
     // thinking how I can determine if the file can be opended or not
 
     printf("In read_db 2\n");
@@ -37,18 +40,42 @@ int read_db(char *filename) {
         printf("In read_db 3\n");
         //*** HERE I am not certain I am reading in the data with the correct format specifier
         //itemnum(int) category(char[]) item(char[]) size(char) quantity(int) cost(double) onsale(int)  
-        
-        //        while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
-        
-        char cat[20];
-        while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, cat, db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
-            
-            if (strcmp(cat, "toys") == 0) {
-                db[i]->category = toys;
-            }
 
-            printf("In read_db in while here is i: %d\n",i);
-            i++;
+        //        while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
+
+        // temp holder for category and name
+        char cat[20];
+        //MAX_ITME_CHARS = 32
+
+        //char nam[MAX_ITEM_CHARS];
+
+        for (int i = 0; i < numLines; i++) {
+            // instantiating a new db object for each line of the file
+            db[i] = malloc(sizeof(item));
+            num_items++;
+
+            while (fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, cat, db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale) != EOF) { 
+
+                if (strcmp(cat, "clothes") == 0) {
+                    db[i]->category = clothes;
+                } else if (strcmp(cat, "electronics") == 0) {
+                    db[i]->category = electronics;
+
+                } else if (strcmp(cat, "tools") == 0) {
+                    db[i]->category = tools;
+
+                } else if (strcmp(cat, "toys") == 0) {
+                    db[i]->category = toys;
+
+                } else {
+                    printf("Unable to match the enum for category\n");
+                    exit(5);
+                }
+
+                //db[i]->name = nam;
+
+                printf("In read_db in while here is i: %d\n",i);
+            }
         }
 
         printf("about to return in read_db\n");
