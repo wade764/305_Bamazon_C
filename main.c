@@ -160,14 +160,165 @@ int main(int argc, char **argv) {
     //printf("strcmp admin: %d shopper: %d\n",validUser1,validUser2);
 
     // strcmp returns anything other than 0 it will exit
+
+    // The following commands are for the admin account - bamazon
     if (!validUser1) {
         // validUser1 == 0 so it is the admin account
         // now we need to move to the admin commands
+        // we need to open a scanf to allow the user to enter commands
+        int response;
+        printf("Please select from the following options\n");
+        printf("1. Add an item to DB\n"); //add itemnum temcategory itemname size quantity cost onsale
+        printf("2. Delete Item (item number)\n"); //delete itemnum
+        printf("3. Update item cost (item number)\n"); //updatecost itemnum cost
+        printf("4. Update item quantity\n"); //updatequantity itemnum quantity
+        printf("5. Save DB\n"); // save does not quit
+        printf("6. Quit program without saving\n"); // quit without saving
+
+        // using a switch statement to evaluate commands
+        // labeled loop used to continue prompt until a valid entry
+        //Here2:
+        // must have the print here you can not combine the scanner like below
+        //scanf(":%d",&response); this goes into a loop
+        //printf(": ");
+        scanf("%d",&response);
+        // if you put anything other than in int here it will go into an infinite loop
+
+        // *** Im thinking we need to add a loop that the switch statement is in to continue user prompt
+
+        int addItem;
+Here:
+        switch(response) {
+            case 1: // *** Does not write to the database ***
+                // adding an item
+                addItem = write_db(inputFile);
+
+                if (!addItem) {
+                    printf("Item added sucessfully!\n");
+                } else {
+                    printf("Could not add item!\n");
+                }
+
+                break;
+            case 2:
+                // delete item by item number
+
+                break;
+            case 3:
+                // update itemnum cost
+
+                break;
+            case 4:
+                // update itemnum quantity
+
+                break;
+            case 5:
+                // saves db but does not exit
+
+                break;
+            case 6:
+                // exits but does not save
+                // Stuck trying to make this more than just an exit, but it works
+                exit(0);
+
+                // Trying to prompt the user if the are sure is buggy
+
+                //printf("Exit the program without saving? y/n\n");
+                //char quit;
+                ////printf(": ");
+                //scanf("%c\n",&quit);
+                //printf("%d %c %d\n",quit, 'y', 'y');
+                //if (strcmp('y',quit) == 0) {
+                //////if (quit != 'y'/* || 'Y'*/) {
+                ////    //goto Here;
+                //    exit(0);
+                //}
+                //} else if (quit != 'y'){
+                //    printf("else loop\n");
+                //    //exit(0);
+                //goto Here;
+                //}
+                break;
+            default:
+                printf("Invalid command!\n");
+                goto Here;
+        }
+
+        // The following block is for the shopper commands *** also for bamazon
+        // **** Must fix so that admin account can use the following commands as well!
 
     } else if (!validUser2) {
         // validUser2 == 0  so it is the shopper account
         // now we need to move to the shopper commands
+        int response;
+        printf("Please select from the following options\n");
+        printf("1. Print Database\n"); // shows all items in the database.
+        printf("2. Show items by category\n"); // shows all items that are category
+        printf("3. Show items in category less than a price\n"); // shows all items in category that cost less than cost
+        printf("4. Show items by category equal to size\n"); // shows all items in category that are equal to size
+        printf("5. Purchase item (by item number)\n"); // purchase item with itemnum
+        printf("6. Complete purchase and exit program (saves db)\n"); // quit and save
 
+        scanf("%d",&response);
+
+Here2:
+        switch(response) {
+            case 1:
+
+                // *** I am trying to read_db into the *db[] then print the items
+                // so far this does not work...
+
+                canRead = read_db(inputFile, numLines);
+                // prints all items in data base
+                show_items();
+
+
+                break;
+            case 2:
+                // shows all items that are category
+
+                break;
+            case 3:
+                // shows all items in category that cost less than user defined cost
+
+                break;
+            case 4:
+                // show category size, shows all items in category that are equal to size
+
+                break;
+            case 5:
+                // purchase item with itemnum
+
+                break;
+            case 6:
+                // exits program and saves to the database
+                // The shopper can only change the database by purchasing items
+                exit(0);
+
+                // Trying to prompt the user if the are sure is buggy
+
+                //printf("Exit the program without saving? y/n\n");
+                //char quit;
+                ////printf(": ");
+                //scanf("%c\n",&quit);
+                //printf("%d %c %d\n",quit, 'y', 'y');
+                //if (strcmp('y',quit) == 0) {
+                //////if (quit != 'y'/* || 'Y'*/) {
+                ////    //goto Here;
+                //    exit(0);
+                //}
+                //} else if (quit != 'y'){
+                //    printf("else loop\n");
+                //    //exit(0);
+                //goto Here;
+                //}
+                break;
+            default:
+                printf("Invalid command!\n");
+                goto Here2;
+        }
+
+        // The last two else if's are for invalid user names
     } else if (validUser1) {
         // not a valid user
         printf("Invalid user!\n");
@@ -195,68 +346,5 @@ int main(int argc, char **argv) {
     //fclose(fin);
     //fclose(fout);
     //return 0;    
-
-    // we need to open a scanf to allow the user to enter commands
-    int response;
-    printf("Please select from the following options\n");
-    printf("1. Add an item to DB\n"); //add itemnum temcategory itemname size quantity cost onsale
-    printf("2. Delete Item (item number)\n"); //delete itemnum
-    printf("3. Update item cost (item number)\n"); //updatecost itemnum cost
-    printf("4. Update item quantity\n"); //updatequantity itemnum quantity
-    printf("5. Save DB\n"); // save does not quit
-    printf("6. Quit program without saving\n"); // quit without saving
-
-    // using a switch statement to evaluate commands
-    // labeled loop used to continue prompt until a valid entry
-    //Here2:
-    // must have the print here you can not combine the scanner like below
-    //scanf(":%d",&response); this goes into a loop
-    //printf(": ");
-    scanf("%d",&response);
-    // if you put anything other than in int here it will go into an infinite loop
-
-Here:
-    switch(response) {
-        case 1:
-
-            break;
-        case 2:
-
-            break;
-        case 3:
-
-            break;
-        case 4:
-
-            break;
-        case 5:
-
-            break;
-        case 6:
-            // Stuck trying to make this more than just an exit, but it works
-            exit(0);
-
-            // Trying to prompt the user if the are sure is buggy
-
-            //printf("Exit the program without saving? y/n\n");
-            //char quit;
-            ////printf(": ");
-            //scanf("%c\n",&quit);
-            //printf("%d %c %d\n",quit, 'y', 'y');
-            //if (strcmp('y',quit) == 0) {
-            //////if (quit != 'y'/* || 'Y'*/) {
-            ////    //goto Here;
-            //    exit(0);
-            //}
-            //} else if (quit != 'y'){
-            //    printf("else loop\n");
-            //    //exit(0);
-            //goto Here;
-            //}
-            break;
-        default:
-            printf("Please enter a valid number.\n");
-            goto Here;
-    }
 
 }

@@ -148,16 +148,18 @@ int write_db(char *filename) {
 // 4 toys barbie_doll x 13 4.350000 90
 void show_items(){
 
+    // *** Line below char const* from (Look up more on what a char const* is)
+    //https://stackoverflow.com/questions/26008540/how-to-print-an-enumerated-variable-in-c
+
+    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+
     int i = 0;
-    while(&db[i]!=NULL)
+    while( db[i] != NULL )
     {
-        printf("%d %p %p %c %d %lf %d \n", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale);
+        printf("%d %s %s %c %d %lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);
         i++;
     }
 
-
-    //loop through list of pointers to items,
-    //print each one.
 }
 
 // Prints the value of item *c to the
