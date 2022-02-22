@@ -106,11 +106,17 @@ int main(int argc, char **argv) {
         printf("File not found!");
     }
 
+    // valid users
+    char admin[] = {"bamazon"};
+    char shopper[] = {"shopper"};
+
+
+
     // First prompt is Enter user name:
-    char userName[20];
+    char userName[15];
     // This can only use letters and numbers NO SPACES!
-    printf("Enter user name: ");
-    scanf("%20s",&userName);
+    printf("Enter user name (bamazon or shopper): ");
+    scanf("%s",&userName);
     printf("\n");
 
     // Test
@@ -119,6 +125,17 @@ int main(int argc, char **argv) {
         printf("%c", userName[i]);
     }
     printf("\n");
+
+    int validUser1 = 0;
+    int validUser2 = 0;
+    for (int i = 0; userName[i] != '\0'; i++) {
+        validUser1 += strcmp(userName[i], admin[i]);
+        validUser2 += strcmp(userName[i], admin[i]);
+    }
+
+    if (!validUser1 || !validUser2) {
+        printf("Invalid user!\n");
+    }
 
 
 

@@ -23,7 +23,7 @@ static int purchased_items = 0;
 // Reads the database filename into the
 // internal data structure. Returns 0 on success and -1 on failure.
 int read_db(char *filename) {
-    FILE *fin = fopen(filename, "r");
+    FILE *fin = fopen(filename, "r"); // open for reading
     int i = 0;
     // thinking how I can determine if the file can be opended or not
 
@@ -43,16 +43,18 @@ int read_db(char *filename) {
 
 // Writes the internal data structure to the
 // database filename. Returns 0 on success and -1 on failure.
+
+// *** see pg 85 of textbook for fopen modes
 int write_db(char *filename) {
-    FILE *fout = fopen(filename, "w+"); 
+    FILE *fout = fopen(filename, "w+"); // w+ Open for reading and writing, but file is overwritten if exists. 
     if(filename!=NULL){
 
         //increments through the item pointer array and prints them.
         int i = 0;
         while(&db[i]!=NULL)//does this need to be "while(**items)"???
         {
-            fprintf(fout, "%d %p %p %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale)
-                i++;
+            fprintf(fout, "%d %p %p %c %d %lf %d", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale);
+            i++;
         }
 
         fclose(fout);//close when done!
@@ -69,12 +71,12 @@ int write_db(char *filename) {
 // 4 toys barbie_doll x 13 4.350000 90
 void show_items(){
 
-
-        while(&db[i]!=NULL)
-        {
-            printf("%d %p %p %c %d %lf %d \n", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale)
-                i++;
-        }
+    int i = 0;
+    while(&db[i]!=NULL)
+    {
+        printf("%d %p %p %c %d %lf %d \n", &db[i]->itemnum, &db[i]->category, &db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale);
+        i++;
+    }
 
 
     //loop through list of pointers to items,
@@ -92,13 +94,13 @@ int sprint_item(char *s, item *c);
 // Returns 0 if itemnum is not in the internal data structure.
 item *find_item_num(int itemnum)
 {
+    int i = 0;
+    while(&db[i]!=NULL)
+    {
 
-        while(&db[i]!=NULL)
-        {
-               
-            if(&db[i]->itemnum==itemnum){return db[i];}
-            i++;
-        }
+        if(&db[i]->itemnum==itemnum){return db[i];}
+        i++;
+    }
 
     return 0;
 }
