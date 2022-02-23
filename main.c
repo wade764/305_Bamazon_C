@@ -54,6 +54,222 @@
 //      database by adding, deleting, and updating items.
 
 //      g. Any other command results in the message Invalid command!
+
+void adminCommands(char *inputFile, int numLines, int canRead) {
+    // the users response to the switch statement
+    int response;
+
+    // will keep running commands until this is switched to 0
+    int keepRunning = 1;
+
+    // used for write_db, tells if the item was sucessfully added to database
+    int addItem;
+
+    while(keepRunning) {
+        printf("Please select from the following options\n");
+        printf("1. Add an item to DB\n"); //add itemnum temcategory itemname size quantity cost onsale
+        printf("2. Delete Item (item number)\n"); //delete itemnum
+        printf("3. Update item cost (item number)\n"); //updatecost itemnum cost
+        printf("4. Update item quantity\n"); //updatequantity itemnum quantity
+        printf("5. Save DB\n"); // save does not quit
+        printf("6. Quit program without saving\n"); // quit without saving
+        printf("7. Print Database\n"); // shows all items in the database.
+        printf("8. Show items by category\n"); // shows all items that are category
+        printf("9. Show items in category less than a price\n"); // shows all items in category that cost less than cost
+        printf("10. Show items by category equal to size\n"); // shows all items in category that are equal to size
+        printf("11. Purchase item (by item number)\n"); // purchase item with itemnum
+        printf("12. Complete purchase and exit program (saves db)\n"); // quit and save
+
+        scanf("%d",&response);
+
+Here:
+        switch(response) {
+            case 1: // *** Does not write to the database ***
+                // adding an item
+                addItem = write_db(inputFile);
+
+                if (!addItem) {
+                    printf("Item added sucessfully!\n");
+                } else {
+                    printf("Could not add item!\n");
+                }
+
+                break;
+            case 2:
+                // delete item by item number
+
+                break;
+            case 3:
+                // update itemnum cost
+
+                break;
+            case 4:
+                // update itemnum quantity
+
+                break;
+            case 5:
+                // saves db but does not exit
+
+                break;
+            case 6:
+                // exits but does not save
+                // Stuck trying to make this more than just an exit, but it works
+                exit(0);
+
+                // Trying to prompt the user if the are sure is buggy
+
+                //printf("Exit the program without saving? y/n\n");
+                //char quit;
+                ////printf(": ");
+                //scanf("%c\n",&quit);
+                //printf("%d %c %d\n",quit, 'y', 'y');
+                //if (strcmp('y',quit) == 0) {
+                //////if (quit != 'y'/* || 'Y'*/) {
+                ////    //goto Here;
+                //    exit(0);
+                //}
+                //} else if (quit != 'y'){
+                //    printf("else loop\n");
+                //    //exit(0);
+                //goto Here;
+                //}
+                break;
+            case 7:
+
+                // *** I am trying to read_db into the *db[] then print the items
+                // so far this does not work...
+
+                canRead = read_db(inputFile, numLines);
+                // prints all items in data base
+                show_items();
+
+
+                break;
+            case 8:
+                // shows all items that are category
+
+                break;
+            case 9:
+                // shows all items in category that cost less than user defined cost
+
+                break;
+            case 10:
+                // show category size, shows all items in category that are equal to size
+
+                break;
+            case 11:
+                // purchase item with itemnum
+
+                break;
+            case 12:
+                // exits program and saves to the database
+                // The shopper can only change the database by purchasing items
+                exit(0);
+
+                // Trying to prompt the user if the are sure is buggy
+
+                //printf("Exit the program without saving? y/n\n");
+                //char quit;
+                ////printf(": ");
+                //scanf("%c\n",&quit);
+                //printf("%d %c %d\n",quit, 'y', 'y');
+                //if (strcmp('y',quit) == 0) {
+                //////if (quit != 'y'/* || 'Y'*/) {
+                ////    //goto Here;
+                //    exit(0);
+                //}
+                //} else if (quit != 'y'){
+                //    printf("else loop\n");
+                //    //exit(0);
+                //goto Here;
+                //}
+                break;
+            default:
+                printf("Invalid command!\n");
+                goto Here;
+        }
+    }
+
+}
+
+void userCommands(char *inputFile, int numLines, int canRead) {
+    // the users response to the switch statement
+    int response;
+
+    // will keep running commands until this is switched to 0
+    int keepRunning = 1;
+
+    while(keepRunning) {
+
+        printf("Please select from the following options\n");
+        printf("1. Print Database\n"); // shows all items in the database.
+        printf("2. Show items by category\n"); // shows all items that are category
+        printf("3. Show items in category less than a price\n"); // shows all items in category that cost less than cost
+        printf("4. Show items by category equal to size\n"); // shows all items in category that are equal to size
+        printf("5. Purchase item (by item number)\n"); // purchase item with itemnum
+        printf("6. Complete purchase and exit program (saves db)\n"); // quit and save
+
+        scanf("%d",&response);
+
+Here:
+        switch(response) {
+            case 1:
+
+                // *** I am trying to read_db into the *db[] then print the items
+                // so far this does not work...
+
+                canRead = read_db(inputFile, numLines);
+                // prints all items in data base
+                show_items();
+
+
+                break;
+            case 2:
+                // shows all items that are category
+
+                break;
+            case 3:
+                // shows all items in category that cost less than user defined cost
+
+                break;
+            case 4:
+                // show category size, shows all items in category that are equal to size
+
+                break;
+            case 5:
+                // purchase item with itemnum
+
+                break;
+            case 6:
+                // exits program and saves to the database
+                // The shopper can only change the database by purchasing items
+                exit(0);
+
+                // Trying to prompt the user if the are sure is buggy
+
+                //printf("Exit the program without saving? y/n\n");
+                //char quit;
+                ////printf(": ");
+                //scanf("%c\n",&quit);
+                //printf("%d %c %d\n",quit, 'y', 'y');
+                //if (strcmp('y',quit) == 0) {
+                //////if (quit != 'y'/* || 'Y'*/) {
+                ////    //goto Here;
+                //    exit(0);
+                //}
+                //} else if (quit != 'y'){
+                //    printf("else loop\n");
+                //    //exit(0);
+                //goto Here;
+                //}
+                break;
+            default:
+                printf("Invalid command!\n");
+                goto Here;
+        }
+    }
+}
+
 int lineCount( char *filename) {
     // The following code was modified from the source below
     // https://www.tutorialspoint.com/c-program-to-count-the-number-of-lines-in-a-file
@@ -165,158 +381,12 @@ int main(int argc, char **argv) {
     if (!validUser1) {
         // validUser1 == 0 so it is the admin account
         // now we need to move to the admin commands
-        // we need to open a scanf to allow the user to enter commands
-        int response;
-        printf("Please select from the following options\n");
-        printf("1. Add an item to DB\n"); //add itemnum temcategory itemname size quantity cost onsale
-        printf("2. Delete Item (item number)\n"); //delete itemnum
-        printf("3. Update item cost (item number)\n"); //updatecost itemnum cost
-        printf("4. Update item quantity\n"); //updatequantity itemnum quantity
-        printf("5. Save DB\n"); // save does not quit
-        printf("6. Quit program without saving\n"); // quit without saving
-
-        // using a switch statement to evaluate commands
-        // labeled loop used to continue prompt until a valid entry
-        //Here2:
-        // must have the print here you can not combine the scanner like below
-        //scanf(":%d",&response); this goes into a loop
-        //printf(": ");
-        scanf("%d",&response);
-        // if you put anything other than in int here it will go into an infinite loop
-
-        // *** Im thinking we need to add a loop that the switch statement is in to continue user prompt
-
-        int addItem;
-Here:
-        switch(response) {
-            case 1: // *** Does not write to the database ***
-                // adding an item
-                addItem = write_db(inputFile);
-
-                if (!addItem) {
-                    printf("Item added sucessfully!\n");
-                } else {
-                    printf("Could not add item!\n");
-                }
-
-                break;
-            case 2:
-                // delete item by item number
-
-                break;
-            case 3:
-                // update itemnum cost
-
-                break;
-            case 4:
-                // update itemnum quantity
-
-                break;
-            case 5:
-                // saves db but does not exit
-
-                break;
-            case 6:
-                // exits but does not save
-                // Stuck trying to make this more than just an exit, but it works
-                exit(0);
-
-                // Trying to prompt the user if the are sure is buggy
-
-                //printf("Exit the program without saving? y/n\n");
-                //char quit;
-                ////printf(": ");
-                //scanf("%c\n",&quit);
-                //printf("%d %c %d\n",quit, 'y', 'y');
-                //if (strcmp('y',quit) == 0) {
-                //////if (quit != 'y'/* || 'Y'*/) {
-                ////    //goto Here;
-                //    exit(0);
-                //}
-                //} else if (quit != 'y'){
-                //    printf("else loop\n");
-                //    //exit(0);
-                //goto Here;
-                //}
-                break;
-            default:
-                printf("Invalid command!\n");
-                goto Here;
-        }
-
-        // The following block is for the shopper commands *** also for bamazon
-        // **** Must fix so that admin account can use the following commands as well!
+        adminCommands(inputFile, numLines, canRead);
 
     } else if (!validUser2) {
         // validUser2 == 0  so it is the shopper account
         // now we need to move to the shopper commands
-        int response;
-        printf("Please select from the following options\n");
-        printf("1. Print Database\n"); // shows all items in the database.
-        printf("2. Show items by category\n"); // shows all items that are category
-        printf("3. Show items in category less than a price\n"); // shows all items in category that cost less than cost
-        printf("4. Show items by category equal to size\n"); // shows all items in category that are equal to size
-        printf("5. Purchase item (by item number)\n"); // purchase item with itemnum
-        printf("6. Complete purchase and exit program (saves db)\n"); // quit and save
-
-        scanf("%d",&response);
-
-Here2:
-        switch(response) {
-            case 1:
-
-                // *** I am trying to read_db into the *db[] then print the items
-                // so far this does not work...
-
-                canRead = read_db(inputFile, numLines);
-                // prints all items in data base
-                show_items();
-
-
-                break;
-            case 2:
-                // shows all items that are category
-
-                break;
-            case 3:
-                // shows all items in category that cost less than user defined cost
-
-                break;
-            case 4:
-                // show category size, shows all items in category that are equal to size
-
-                break;
-            case 5:
-                // purchase item with itemnum
-
-                break;
-            case 6:
-                // exits program and saves to the database
-                // The shopper can only change the database by purchasing items
-                exit(0);
-
-                // Trying to prompt the user if the are sure is buggy
-
-                //printf("Exit the program without saving? y/n\n");
-                //char quit;
-                ////printf(": ");
-                //scanf("%c\n",&quit);
-                //printf("%d %c %d\n",quit, 'y', 'y');
-                //if (strcmp('y',quit) == 0) {
-                //////if (quit != 'y'/* || 'Y'*/) {
-                ////    //goto Here;
-                //    exit(0);
-                //}
-                //} else if (quit != 'y'){
-                //    printf("else loop\n");
-                //    //exit(0);
-                //goto Here;
-                //}
-                break;
-            default:
-                printf("Invalid command!\n");
-                goto Here2;
-        }
+        userCommands(inputFile, numLines, canRead);
 
         // The last two else if's are for invalid user names
     } else if (validUser1) {
