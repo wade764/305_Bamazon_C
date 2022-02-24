@@ -140,8 +140,12 @@ Here:
                 // so far this does not work...
 
                 canRead = read_db(inputFile, numLines);
+                // The file could not be read in read_db if canRead is anything but 0
+                if (canRead) {
+                    printf("File not found!");
+                }
                 // prints all items in data base
-                show_items();
+                show_items(numLines);
 
 
                 break;
@@ -219,8 +223,12 @@ Here:
                 // so far this does not work...
 
                 canRead = read_db(inputFile, numLines);
+                // The file could not be read in read_db if canRead is anything but 0
+                if (canRead) {
+                    printf("File not found!");
+                }
                 // prints all items in data base
-                show_items();
+                show_items(numLines);
 
 
                 break;
@@ -270,6 +278,8 @@ Here:
     }
 }
 
+//24FEB The lineCount was modified to return the total number of lines in the file
+// before it was returning -1 for can not read and 0 for can read...
 int lineCount( char *filename) {
     // The following code was modified from the source below
     // https://www.tutorialspoint.com/c-program-to-count-the-number-of-lines-in-a-file
@@ -278,23 +288,28 @@ int lineCount( char *filename) {
     //using namespace std;
     //#define FILENAME "test.txt"
     char ch;
-    int linesCount=0;
+    //int linesCount=0;
+    int numLines = 0;
     //open file in read more
     FILE *fp = fopen(filename, "r");
+    // retruning 0 instead of -1 
     if(fp == NULL) {
         printf("File \"%s\" does not exist!!!\n",filename);
-        return -1;
+        return 0;
     }
     //read character by character and check for new line
     while((ch = fgetc(fp))!=EOF) {
         if(ch == '\n')
-            linesCount++;
+            //linesCount++;
+            numLines++;
     }
     //close the file
     fclose(fp);
+
     //print number of lines
-    printf("Total number of lines are: %d\n",linesCount);
-    return 0;
+    printf("Total number of lines are: %d\n",/*linesCount*/numLines);
+    //return 0;
+    return numLines;
 }
 
 void deleteItem (int itemNum)// 11. b.
@@ -340,8 +355,8 @@ int main(int argc, char **argv) {
     }
 
     int numLines = lineCount(inputFile);
-    // There was an issue reading the number of lines so the program exits
-    if (numLines) {
+    // There was an issue reading the number of lines so the program exits if numlines is 0
+    if (!numLines) {
         exit(6);
     }
 
@@ -351,7 +366,7 @@ int main(int argc, char **argv) {
     // test
     printf("0 is good, -1 is bad: %d\n",canRead);
 
-    // this should print if the data base can not be read
+    // The file could not be read in read_db if canRead is anything but 0
     if (canRead) {
         printf("File not found!");
     }
@@ -381,11 +396,21 @@ int main(int argc, char **argv) {
     if (!validUser1) {
         // validUser1 == 0 so it is the admin account
         // now we need to move to the admin commands
+        numLines = lineCount(inputFile);
+        // There was an issue reading the number of lines so the program exits if numlines is 0
+        if (!numLines) {
+            exit(6);
+        }
         adminCommands(inputFile, numLines, canRead);
 
     } else if (!validUser2) {
         // validUser2 == 0  so it is the shopper account
         // now we need to move to the shopper commands
+        numLines = lineCount(inputFile);
+        // There was an issue reading the number of lines so the program exits if numlines is 0
+        if (!numLines) {
+            exit(6);
+        }
         userCommands(inputFile, numLines, canRead);
 
         // The last two else if's are for invalid user names
