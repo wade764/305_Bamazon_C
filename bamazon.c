@@ -125,6 +125,32 @@ int read_db(char *filename, int numLines) {
             //fscanf(filename, 3, &db[num_items]->onsale);
             numWritten += scanf("%d", &sale);
 
+            //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+
+            db[num_items]->itemnum = itemN;
+            if (strcmp(cat, "clothes") == 0) {
+                db[num_items]->category = clothes;
+            } else if (strcmp(cat, "electronics") == 0) {
+                db[num_items]->category = electronics;
+
+            } else if (strcmp(cat, "tools") == 0) {
+                db[num_items]->category = tools;
+
+            } else if (strcmp(cat, "toys") == 0) {
+                db[num_items]->category = toys;
+
+            } else {
+                printf("Unable to match the enum for category\n");
+                exit(5);
+            }
+            strcpy(db[num_items]->name, nam);
+            //db[num_items]->name = nam;
+            db[num_items]->size = siz;
+            db[num_items]->quantity = quan;
+            db[num_items]->cost = doub;
+            db[num_items]->onsale = sale;
+
+            // *** Dont delete this one line below replacing with next ***
             fscanf(fout, "%d %s %s %c %d %lf %d", &itemN, cat, nam, &siz, &quan, &doub, &sale);
 
             //increments through the item pointer array and prints them.
@@ -136,7 +162,15 @@ int read_db(char *filename, int numLines) {
             //i++;
             //}
 
+            // *** look at this
+            //fscanf(fout, "%d %s %s %c %d %lf %d", &db[num_items]->itemnum, cat, db[num_items]->name, &db[num_items]->size, &db[num_items]->quantity, &db[num_items]->cost, &db[num_items]->onsale); 
+
             fclose(fout);//close when done!
+
+            // Test statement
+            //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+            //printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, enumToString[db[num_items]->category], db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
+            printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, db[num_items]->category, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
 
             // trying something for show_items()
             //rewind(fout);
