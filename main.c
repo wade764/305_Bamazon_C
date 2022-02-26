@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bamazon.h"
-//I'm just adding this as a test - Ethan, hello there
+
+//int numLines = 0;
+int num_items = 0;
 
 // This allows the owner and shopper to enter commands that are described in requirements 11 and 12
 
@@ -54,6 +56,11 @@
 //      database by adding, deleting, and updating items.
 
 //      g. Any other command results in the message Invalid command!
+
+//int get_numLines(){
+//    
+//    return numLines;
+//}
 
 void adminCommands(char *inputFile, int numLines, int canRead) {
     // the users response to the switch statement
@@ -136,16 +143,19 @@ Here:
                 break;
             case 7:
 
-                // *** I am trying to read_db into the *db[] then print the items
-                // so far this does not work...
+                //num_items = get_numItems();
+                //printf("num_items: %d\n",num_items);
 
-                canRead = read_db(inputFile, numLines);
-                // The file could not be read in read_db if canRead is anything but 0
-                if (canRead) {
-                    printf("File not found!");
-                }
+                //canRead = read_db(inputFile, num_items);
+                //// The file could not be read in read_db if canRead is anything but 0
+                //if (canRead) {
+                //    printf("File not found!");
+                //}
+
+
                 // prints all items in data base
-                show_items(numLines);
+                //show_items(numLines);
+                show_items();
 
 
                 break;
@@ -253,23 +263,6 @@ Here:
                 // The shopper can only change the database by purchasing items
                 exit(0);
 
-                // Trying to prompt the user if the are sure is buggy
-
-                //printf("Exit the program without saving? y/n\n");
-                //char quit;
-                ////printf(": ");
-                //scanf("%c\n",&quit);
-                //printf("%d %c %d\n",quit, 'y', 'y');
-                //if (strcmp('y',quit) == 0) {
-                //////if (quit != 'y'/* || 'Y'*/) {
-                ////    //goto Here;
-                //    exit(0);
-                //}
-                //} else if (quit != 'y'){
-                //    printf("else loop\n");
-                //    //exit(0);
-                //goto Here;
-                //}
                 break;
             default:
                 printf("Invalid command!\n");

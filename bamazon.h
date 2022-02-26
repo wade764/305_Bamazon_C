@@ -20,6 +20,9 @@ typedef struct {
         int onsale;
 } item;
 
+// adding get_numItems
+int get_numItems();
+
 // modified this to take the number of lines in the file
 int read_db(char *filename, int numLines);
 

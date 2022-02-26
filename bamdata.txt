@@ -34,3 +34,4 @@
 34 tools step_stool x 12 34.99 100
 35 tools ladder x 27 75.0 75
 36 tools toolbox x 18 123.45 90
+37 tools hammer x 10 15.99 100

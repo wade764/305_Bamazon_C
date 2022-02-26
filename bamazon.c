@@ -24,6 +24,12 @@ static int purchased_items = 0;
 
 // Reads the database filename into the
 // internal data structure. Returns 0 on success and -1 on failure.
+
+// function to return num_items
+int get_numItems() {
+    return num_items;
+}
+
 int read_db(char *filename, int numLines) {
 
     //printf("In read_db\n");
@@ -95,9 +101,9 @@ int read_db(char *filename, int numLines) {
             db[num_items+1] = malloc(sizeof(item));
             num_items++;
             //itemnum(int) category(char[]) name(char[]) size(char) quantity(int) cost(double) onsale(int)  
-            int numWritten = 0;
+            //int numWritten = 0;
 
-            int itemN;
+            //int itemN;
             char cat[20];
             char nam[MAX_ITEM_CHARS];
             char siz;
@@ -106,28 +112,38 @@ int read_db(char *filename, int numLines) {
             int sale;
             // max num of items is 300 so max it should scan is 3
             //fscanf(filename, 3, &db[num_items]->itemnum);
-            numWritten += scanf("%d", &itemN);
+            //scanf("%d %s %s %c %d %lf %d", &itemN, cat, nam, &siz, &quan, &doub, &sale);
+            
+            // no need to scan the item number it will just go to the next number
+            scanf("%s %s %c %d %lf %d", cat, nam, &siz, &quan, &doub, &sale);
+            //numWritten += scanf("%d", &itemN);
             // this is the enum *** not sure on the number of characters to limit
             //fscanf(filename, 15, &db[num_items]->category);
-            numWritten += scanf("%s", cat);
+
+            //numWritten += scanf("%s", cat);
             // this is the name of the item limited to 32 characters
             //fscanf(filename, 32, &db[num_items]->name);
-            numWritten += scanf("%s", nam);
+
+            //numWritten += scanf("%s", nam);
             // single char for size, if item doesnt have a size it is x by default
             //fscanf(filename, 1, &db[num_items]->size);
-            numWritten += scanf("%c", &siz);
+
+            //numWritten += scanf("%c", &siz);
             // no specification for quantity limit and cost
             //fscanf(filename, 10, &db[num_items]->quantity);
-            numWritten += scanf("%d", &quan);
+
+            //numWritten += scanf("%d", &quan);
             //fscanf(filename, 20, &db[num_items]->cost);
-            numWritten += scanf("%lf", &doub);
+
+            //numWritten += scanf("%lf", &doub);
             // this is limited to 3 because it is a percentage 100 is full price 75 is 25% off the item
             //fscanf(filename, 3, &db[num_items]->onsale);
-            numWritten += scanf("%d", &sale);
+
+            //numWritten += scanf("%d", &sale);
 
             //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
 
-            db[num_items]->itemnum = itemN;
+            db[num_items]->itemnum = num_items;
             if (strcmp(cat, "clothes") == 0) {
                 db[num_items]->category = clothes;
             } else if (strcmp(cat, "electronics") == 0) {
@@ -151,7 +167,8 @@ int read_db(char *filename, int numLines) {
             db[num_items]->onsale = sale;
 
             // *** Dont delete this one line below replacing with next ***
-            fscanf(fout, "%d %s %s %c %d %lf %d", &itemN, cat, nam, &siz, &quan, &doub, &sale);
+            //fscanf(fout, "%d %s %s %c %d %lf %d", &itemN, cat, nam, &siz, &quan, &doub, &sale);
+            fprintf(fout, "%d %s %s %c %d %.2lf %d", num_items, cat, nam, siz, quan, doub, sale);
 
             //increments through the item pointer array and prints them.
             //int i = 0;
@@ -170,7 +187,7 @@ int read_db(char *filename, int numLines) {
             // Test statement
             //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
             //printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, enumToString[db[num_items]->category], db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
-            printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, db[num_items]->category, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
+            printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
 
             // trying something for show_items()
             //rewind(fout);
@@ -188,7 +205,8 @@ int read_db(char *filename, int numLines) {
     // 2 electronics computer x 3 100.000000 100
     // 3 tools drill x 5 75.900000 85
     // 4 toys barbie_doll x 13 4.350000 90
-    void show_items(int numLines){
+    //void show_items(int numLines){
+    void show_items(){
 
         // *** Line below char const* from (Look up more on what a char const* is)
         //https://stackoverflow.com/questions/26008540/how-to-print-an-enumerated-variable-in-c
@@ -196,7 +214,7 @@ int read_db(char *filename, int numLines) {
         char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
 
         int i = 0;
-        while( db[i] != NULL && i < numLines)
+        while( db[i] != NULL && i < num_items)
         {
             printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);
             i++;
