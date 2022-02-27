@@ -91,6 +91,11 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
 
         // used for case 2, 3
         int itemNum;
+        // used for case 3              
+        int keepRunning = 1;
+        double newPrice;
+        // used for case 4
+        int newQuantity;
 
 Here:
         switch(response) {
@@ -134,8 +139,20 @@ Here:
                 printf("\n");
                 item* temp3 = malloc(sizeof(item));
                 temp3 = find_item_num(itemNum);
+Here2:
+                while (keepRunning) {
+                    printf("Please enter the new cost for %s: ", temp3->name);
+                    scanf("%lf", &newPrice);
+                    printf("\n");
+                    if (newPrice < 0){
+                        printf("Please enter a positive number\n");
+                        goto Here2;
+                    }
+                    keepRunning = 0;
+                }
 
-                update_item(itemNum, temp3->category, temp3->name, temp3->size, temp3->cost, temp3->onsale);
+                // calling this with the user provided itemNum and newPrice
+                update_item(itemNum, temp3->category, temp3->name, temp3->size, temp3->quantity, newPrice, temp3->onsale);
 
                 // This messes with the database
                 //free(temp);
@@ -143,6 +160,17 @@ Here:
                 break;
             case 4:
                 // update itemnum quantity
+                printf("Please enter item number to update the quantity in the database: ");
+                scanf("%d",&itemNum);
+                printf("\n");
+                item* temp4 = malloc(sizeof(item));
+                temp4 = find_item_num(itemNum);
+
+                printf("What is the updated quantity for %s: ",temp4->name);
+                scanf("%d",&newQuantity);
+                printf("\n");
+
+                update_item(temp4->itemnum, temp4->category, temp4->name, temp4->size, newQuantity, temp4->cost, temp4->onsale);
 
                 break;
             case 5:

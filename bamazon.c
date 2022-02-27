@@ -27,21 +27,24 @@ int get_numItems() {
     return num_items;
 }
 
-item *update_item(int itemnum, category category, char *name, char size, double cost, int onsale) {
-    double newPrice;
-    int keepRunning = 1;
-Here:
-    while (keepRunning) {
-        printf("Please enter the new cost for %s: ", db[itemnum-1]->name);
-        scanf("%lf", &newPrice);
-        printf("\n");
-        if (newPrice < 0){
-            printf("Please enter a positive number\n");
-            goto Here;
-        }
-        keepRunning = 0;
-    }
-    db[itemnum-1]->cost = newPrice;
+// modified to take quantity
+item *update_item(int itemnum, category category, char *name, char size, int quantity, double cost, int onsale) {
+    //double newPrice;
+    //int keepRunning = 1;
+    //Here:
+    //while (keepRunning) {
+    //    printf("Please enter the new cost for %s: ", db[itemnum-1]->name);
+    //    scanf("%lf", &newPrice);
+    //    printf("\n");
+    //    if (newPrice < 0){
+    //        printf("Please enter a positive number\n");
+    //        goto Here;
+    //    }
+    //    keepRunning = 0;
+    //}
+    //db[itemnum-1]->cost = newPrice;
+    db[itemnum-1]->cost = cost;
+    db[itemnum-1]->quantity = quantity;
 
     return db[itemnum-1];
 

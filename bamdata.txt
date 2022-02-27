@@ -35,3 +35,4 @@
 35 tools ladder x 27 75.0 75
 36 tools toolbox x 18 123.45 90
 37 electronics gameboy x 10 100.95 100
+38 electronics gamecube x 10 10.10 100

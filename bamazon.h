@@ -38,7 +38,8 @@ int find_item_str(item **items, char *s);
 
 item *add_item(int itemnum, char *category, char *name, char size, int quantity, double cost, int onsale);
 
-item *update_item(int itemnum, category category, char *name, char size,double cost, int onsale);
+// modified this to take the item quantity
+item *update_item(int itemnum, category category, char *name, char size,int quantity, double cost, int onsale);
 
 int get_category(item **items, category c);
 
