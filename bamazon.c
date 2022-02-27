@@ -234,7 +234,15 @@ int read_db(char *filename, int numLines) {
     // Returns item* of itemnum . The item* is
     // deleted from the internal data structure. Returns 0 if itemnum is not in the internal
     // data structure.
-    item *delete_item(int itemnum);
+    
+    // I am lost why delete_item returns an item * if it is deleted from the internal data structure contained in bamazon.c
+    item *delete_item(int itemnum) {
+        if (db[itemnum] != NULL) {
+
+        return db[itemnum];
+        }
+        return 0;
+    }
 
     // Fills in the *receipt[] with strings of all
     // the items purchased, which are in the array purchased . Returns the number of
