@@ -49,7 +49,7 @@ int read_db(char *filename, int numLines) {
         // temp holder for category
         char cat[20];
 
-        for (int i = num_items; i < numLines; i++, num_items++) {
+        for (int i = 0; i < numLines; i++, num_items++) {
             // instantiating a new db object for each line of the file
             db[i] = malloc(sizeof(item));
             //num_items++;
@@ -97,8 +97,7 @@ int read_db(char *filename, int numLines) {
 
         if(filename!=NULL){
 
-            db[num_items+1] = malloc(sizeof(item));
-            num_items++;
+            db[num_items] = malloc(sizeof(item));
 
             char cat[20];
             char nam[MAX_ITEM_CHARS];
@@ -139,6 +138,7 @@ int read_db(char *filename, int numLines) {
             // Test statement
             printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
 
+            num_items++;
             return 0;
         } else {
             // The file was not written sucessfully...
@@ -161,9 +161,9 @@ int read_db(char *filename, int numLines) {
         char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
 
         int i = 0;
-        printf("num_items: %d\n",num_items);
+        //printf("num_items: %d\n",num_items);
         //while( db[i]/* != NULL && i < num_items*/)
-        while(i < num_items-1)
+        while(i < num_items)
         {
             printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);
             i++;
@@ -234,24 +234,46 @@ int read_db(char *filename, int numLines) {
     // Returns item* of itemnum . The item* is
     // deleted from the internal data structure. Returns 0 if itemnum is not in the internal
     // data structure.
-    
+
     // I am lost why delete_item returns an item * if it is deleted from the internal data structure contained in bamazon.c
-    item *delete_item(int itemnum) {
-        if (db[itemnum] != NULL) {
+    item *delete_item(int itemNum) {
+        if (db[itemNum-1] != NULL) {
 
-        return db[itemnum];
-        }
-        return 0;
-    }
+            // used as reference material and modified from example
+            // https://www.tutorialspoint.com/c-program-to-delete-an-array-element-using-pointers
 
-    // Fills in the *receipt[] with strings of all
-    // the items purchased, which are in the array purchased . Returns the number of
-    // elements in items . checkout assigns the variable purchased_items to 0.
-    int checkout(char **receipt);
+            int i, j;
+            if((itemNum-1) <= num_items) {
+                //for(i = itemNum - 1; i < num_items; i++){ 
 
-    // converts c to a string.
-    // category_to_str mallocs memory for the resulting string.
-    char *category_to_str(category c);
+                // you take the provided index (itemNum) and shift all pointers down one index 
+                for(i = (itemNum-1); i < num_items; i++){ 
+                    j = i + 1;
+                    //*(db[itemNum]+i) = *(db[itemNum]+j);
+                    db[itemNum-1] = (db[itemNum] + j);
+                }
+                num_items--;
+                printf("after deletion the array elements are:\n");
+                //for(i = 0; i < num_items - 1; i++) {
+                for(i = 0; i < num_items; i++) {
+                    //printf("%d\n",((db[itemNum]+i)->itemnum));
+                    printf("%d\n", db[i]->itemnum);
+                }
+                // still confused why we return the item*
+                return (db[itemNum] - 1);
+            }
+            }
+            return 0;
+            }
 
-    // converts the string s to a category .
-    category str_to_category(char *s);
+            // Fills in the *receipt[] with strings of all
+            // the items purchased, which are in the array purchased . Returns the number of
+            // elements in items . checkout assigns the variable purchased_items to 0.
+            int checkout(char **receipt);
+
+            // converts c to a string.
+            // category_to_str mallocs memory for the resulting string.
+            char *category_to_str(category c);
+
+            // converts the string s to a category .
+            category str_to_category(char *s);

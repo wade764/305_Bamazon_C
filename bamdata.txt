@@ -35,14 +35,3 @@
 35 tools ladder x 27 75.0 75
 36 tools toolbox x 18 123.45 90
 37 tools hammer x 10 15.99 100
-38 electronics spatula x 10 10.10 100
-39 toys rock x 10 1000.00 100
-40 tools book x 10 10.10 100
-41 tools shit x 10 10.10 0
-42 toys ass x 10 10.10 100
-43 toys crap x 10 10.10 100
-44 toys hell x 10 10.10 100
-45 toys shit 1 0 10.10 100
-46 toys killme x 10 10.10 100
-47 toys hello x 10 10.10 100
-48 toys test x 10 10.10 100

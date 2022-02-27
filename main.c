@@ -3,12 +3,6 @@
 #include <string.h>
 #include "bamazon.h"
 
-// 26FEB currently stuck on an issue with printing the database from start
-// then adding and item and then printing again
-// the added item will not appear until I restart the program
-
-
-
 //int numLines = 0;
 int num_items = 0;
 
@@ -95,6 +89,9 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
 
         scanf("%d",&response);
 
+        // used for delete case 2
+        int itemNum;
+
 Here:
         switch(response) {
             case 1: // *** Does not write to the database ***
@@ -111,6 +108,14 @@ Here:
                 break;
             case 2:
                 // delete item by item number
+                printf("Please enter item number to delete from database: ");
+                scanf("%d",&itemNum);
+                printf("\n");
+                item* canDelete = delete_item(itemNum);
+                // if delete_item returns 0 it is not found in internal data structure
+                if (!canDelete) {
+                    printf("Item number not found in database.\n");
+                }
 
                 break;
             case 3:
@@ -236,16 +241,18 @@ Here:
         switch(response) {
             case 1:
 
+                num_items = get_numItems();
                 // *** I am trying to read_db into the *db[] then print the items
                 // so far this does not work...
 
-                canRead = read_db(inputFile, numLines);
-                // The file could not be read in read_db if canRead is anything but 0
-                if (canRead) {
-                    printf("File not found!");
-                }
+                //canRead = read_db(inputFile, numLines);
+                //// The file could not be read in read_db if canRead is anything but 0
+                //if (canRead) {
+                //    printf("File not found!");
+                //}
                 // prints all items in data base
-                show_items(numLines);
+                //show_items(numLines);
+                show_items();
 
 
                 break;
@@ -361,6 +368,8 @@ int main(int argc, char **argv) {
     }
 
     // passing the file pointer and the number of lines in the program
+    // *** 
+    // we want to only read the database once!!!
     int canRead = read_db(inputFile, numLines);
 
     // test
