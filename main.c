@@ -3,6 +3,12 @@
 #include <string.h>
 #include "bamazon.h"
 
+// 26FEB currently stuck on an issue with printing the database from start
+// then adding and item and then printing again
+// the added item will not appear until I restart the program
+
+
+
 //int numLines = 0;
 int num_items = 0;
 
@@ -94,6 +100,7 @@ Here:
             case 1: // *** Does not write to the database ***
                 // adding an item
                 addItem = write_db(inputFile);
+                num_items = get_numItems();
 
                 if (!addItem) {
                     printf("Item added sucessfully!\n");
@@ -143,7 +150,7 @@ Here:
                 break;
             case 7:
 
-                //num_items = get_numItems();
+                num_items = get_numItems();
                 //printf("num_items: %d\n",num_items);
 
                 //canRead = read_db(inputFile, num_items);
