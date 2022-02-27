@@ -89,12 +89,12 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
 
         scanf("%d",&response);
 
-        // used for delete case 2
+        // used for case 2, 3
         int itemNum;
 
 Here:
         switch(response) {
-            case 1: // *** Does not write to the database ***
+            case 1: 
                 // adding an item
                 addItem = write_db(inputFile);
                 num_items = get_numItems();
@@ -111,7 +111,8 @@ Here:
                 printf("Please enter item number to delete from database: ");
                 scanf("%d",&itemNum);
                 printf("\n");
-                item* canDelete = delete_item(itemNum);
+                // passing the itemNum -1 because it will be the index of the db[]
+                item* canDelete = delete_item(itemNum-1);
                 // if delete_item returns 0 it is not found in internal data structure
                 if (!canDelete) {
                     printf("Item number not found in database.\n");
@@ -120,6 +121,13 @@ Here:
                 break;
             case 3:
                 // update itemnum cost
+                printf("Please enter item number to update the cost in the database: ");
+                scanf("%d",&itemNum);
+                printf("\n");
+                item* temp = malloc(sizeof(item));
+                temp = find_item_num(itemNum);
+
+                update_item(itemNum, temp->category, temp->name, temp->size, temp->cost, temp->onsale);
 
                 break;
             case 4:
@@ -285,21 +293,17 @@ Here:
     }
 }
 
-//24FEB The lineCount was modified to return the total number of lines in the file
-// before it was returning -1 for can not read and 0 for can read...
+// returns the total number of lines in the file
 int lineCount( char *filename) {
     // The following code was modified from the source below
     // https://www.tutorialspoint.com/c-program-to-count-the-number-of-lines-in-a-file
 
-    //#include<iostream>
-    //using namespace std;
-    //#define FILENAME "test.txt"
     char ch;
-    //int linesCount=0;
     int numLines = 0;
+
     //open file in read more
     FILE *fp = fopen(filename, "r");
-    // retruning 0 instead of -1 
+    // returning 0 instead of -1 
     if(fp == NULL) {
         printf("File \"%s\" does not exist!!!\n",filename);
         return 0;
@@ -307,15 +311,13 @@ int lineCount( char *filename) {
     //read character by character and check for new line
     while((ch = fgetc(fp))!=EOF) {
         if(ch == '\n')
-            //linesCount++;
             numLines++;
     }
     //close the file
     fclose(fp);
 
     //print number of lines
-    printf("Total number of lines are: %d\n",/*linesCount*/numLines);
-    //return 0;
+    //printf("Total number of lines are: %d\n",/*linesCount*/numLines);
     return numLines;
 }
 
@@ -373,7 +375,7 @@ int main(int argc, char **argv) {
     int canRead = read_db(inputFile, numLines);
 
     // test
-    printf("0 is good, -1 is bad: %d\n",canRead);
+    //printf("0 is good, -1 is bad: %d\n",canRead);
 
     // The file could not be read in read_db if canRead is anything but 0
     if (canRead) {
@@ -432,23 +434,4 @@ int main(int argc, char **argv) {
         printf("Invalid user!\n");
         exit(3);
     }
-
-    // commented out code from Module C pdf pg 85
-
-    //FILE *fin = fopen(argv[1], "r");
-    //FILE *fout = fopen(argv[1], "w+");
-
-    //int number, count = 0;
-    //char name[50];
-    //double cost;
-    //fprintf(fout, "Parts in Database\n");
-    //while (fscanf(fin, "%s %d %lf", name, &number, &cost) != EOF) {
-    //fprintf(stdout,"Part - Name: %s, Number: %d Cost: $%.2lf\n", name, number, cost);
-    //fprintf(fout, "Part - Name: %s, Number: %d Cost: $%.2lf\n", name, number, cost);
-    //count++; // count lines read
-    //}
-    //fclose(fin);
-    //fclose(fout);
-    //return 0;    
-
 }
