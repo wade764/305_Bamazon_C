@@ -111,12 +111,20 @@ Here:
                 printf("Please enter item number to delete from database: ");
                 scanf("%d",&itemNum);
                 printf("\n");
+                item* temp2 = malloc(sizeof(item));
+                temp2 = find_item_num(itemNum);
                 // passing the itemNum -1 because it will be the index of the db[]
-                item* canDelete = delete_item(itemNum-1);
+                temp2 = delete_item(itemNum-1);
+
+                // Test print
+                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
+                printf("This is the deleted item: %d %s %s %c %d %.2lf %d\n", temp2->itemnum, enumToString[temp2->category], temp2->name, temp2->size, temp2->quantity, temp2->cost, temp2->onsale);
+
+                // *** this will never happen because of find_item_num
                 // if delete_item returns 0 it is not found in internal data structure
-                if (!canDelete) {
-                    printf("Item number not found in database.\n");
-                }
+                //if (!canDelete) {
+                //    printf("Item number not found in database.\n");
+                //}
 
                 break;
             case 3:
@@ -124,10 +132,13 @@ Here:
                 printf("Please enter item number to update the cost in the database: ");
                 scanf("%d",&itemNum);
                 printf("\n");
-                item* temp = malloc(sizeof(item));
-                temp = find_item_num(itemNum);
+                item* temp3 = malloc(sizeof(item));
+                temp3 = find_item_num(itemNum);
 
-                update_item(itemNum, temp->category, temp->name, temp->size, temp->cost, temp->onsale);
+                update_item(itemNum, temp3->category, temp3->name, temp3->size, temp3->cost, temp3->onsale);
+
+                // This messes with the database
+                //free(temp);
 
                 break;
             case 4:

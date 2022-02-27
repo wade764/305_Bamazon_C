@@ -192,6 +192,10 @@ int sprint_item(char *s, item *c);
 // Returns 0 if itemnum is not in the internal data structure.
 item *find_item_num(int itemnum)
 {
+    if (db[itemnum-1] == NULL) {
+        printf("Invalid itemnum!\n");
+        exit(7);
+    }
     int i = 0;
 
     //while(&db[i]!=NULL)
@@ -241,14 +245,13 @@ int get_category_cost(item **items, category c, double cost);
 // item in the array purchased and increments the variable purchased_items .
 item *purchase_item(int itemnum);
 
+
+// *** This is still buggy in the way that the item will still display if the invenetory is printed
+// the item will be replaced with 0 clothes _ 0 0.00 0
 // Returns item* of itemnum . The item* is
 // deleted from the internal data structure. Returns 0 if itemnum is not in the internal
 // data structure.
-
-
-// I think this will work because when saving the database if the item number equals 0 it will skip the line
-
-// I am lost why delete_item returns an item * if it is deleted from the internal data structure contained in bamazon.c
+// This will work because when saving the database if the item number equals 0 we can skip writing the line
 item *delete_item(int itemNum) {
     int justOnce = 1;
 
@@ -261,6 +264,9 @@ item *delete_item(int itemNum) {
         if(itemNum <= num_items) {
             //for(i = itemNum - 1; i < num_items; i++){ 
 
+            item* tempDel = malloc(sizeof(item));
+            tempDel = db[itemNum];
+
             // you take the provided index (itemNum) and shift all pointers down one index 
             for(i = itemNum; i < num_items; i++){ 
                 j = i + 1;
@@ -270,6 +276,8 @@ item *delete_item(int itemNum) {
                     justOnce = 0;
                     //printf("In justOnce delete_item\n");
                 }
+                // this sets the items after the deleted one to the previous item number 
+                db[i]->itemnum = i;
 
                 db[itemNum] = (db[itemNum] + j);
             }
@@ -283,9 +291,11 @@ item *delete_item(int itemNum) {
                 printf("%d\n", db[i]->itemnum);
             }
             // still confused why we return the item*
-            return (db[itemNum] - 1);
+            //return (db[itemNum] - 1);
+            return tempDel;
         }
         }
+        // I believe that this will not happen because I am using find_item_num in the admin switch case 2 in main
         return 0;
         }
 
