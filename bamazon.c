@@ -198,13 +198,24 @@ void show_items(){
     // TEST
     //printf("This is numItems being passed in show_items: %d\n",numItems);
 
-    int i = 0;
-    //while(i < num_items)
-    while(db[i] != NULL)
-    {
-        printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);
-        i++;
-    }
+    int i = 0;                                                                                                                                                       
+    //while(i < num_items)                                                                                                                                           
+    while(db[i] != NULL)                                                                                                                                             
+    {                                                                                                                                                                
+        printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
+        i++;                                                                                                                                                         
+    }                                                                                                                                                                
+
+    // DO NOT DELETE USED FOR ACTUALLY REMOVING THE ITEM STILL WORKING ON THIS
+    //for (int i = 0; db[i]; i++) {
+    //    if (db[i] == NULL) {
+
+    //    } else {
+    //    
+    //        printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);
+
+    //    }
+    //}
 
 }
 
@@ -331,6 +342,8 @@ item *delete_item(int itemNum) {
 
                 // This is shifting the pointer to the next element
                 db[itemNum] = (db[itemNum] + j);
+
+                //free(tempDel);
             }
 
             num_items--;
@@ -343,6 +356,7 @@ item *delete_item(int itemNum) {
             //}
 
             return tempDel;
+            //return db[itemNum];
         }
         }
         // I believe that this will not happen because I am using find_item_num in the admin switch case 2 in main
