@@ -142,10 +142,10 @@ int write_db(char *filename) {
 
         // the plus one is important because in this case num_items is an index starting at 0
         db[num_items]->itemnum = num_items+1;
-        
+
         // TEST
         //printf("db[num_items]->itemnum in write_db: %d\n",db[num_items]->itemnum);
-        
+
         if (strcmp(cat, "clothes") == 0) {
             db[num_items]->category = clothes;
         } else if (strcmp(cat, "electronics") == 0) {
@@ -306,9 +306,14 @@ item *delete_item(int itemNum) {
                 //*(db[itemNum]+i) = *(db[itemNum]+j);
                 if (justOnce) {
                     printf("Deleting %s\n",db[itemNum]->name);
-                    free(db[itemNum]);
+                    // *** commenting these out and just using the line below outside of the loop works
+                    //db[itemNum] = (db[itemNum] + j);
+
+                    // DONT DELETE BUT DO NOT USE RIGHT NOW, ONE OR THE OTHER
+                    //free(db[itemNum]);
+                    //db[itemNum] = NULL;
                     justOnce = 0;
-                    
+
                     // TEST
                     //printf("In justOnce delete_item\n");
                 }
@@ -316,39 +321,42 @@ item *delete_item(int itemNum) {
 
                 // this sets the items after the deleted one to the previous item number (The line number not the index) 
                 // this line keeps the item numbers the same prior to delete
+
                 db[i]->itemnum = i+1;
-                // Currently the problem becomes once an item is deleted it stays in the internal database as
-                // 0 clothes  0 0.00 0 , so the index is still there when the user goes to enter another command
-            
+
                 // this line below shift the item numbers down one to line up with the deleted item
                 //db[i]->itemnum = i;
+                // Currently the problem becomes once an item is deleted it stays in the internal database as
+                // 0 clothes  0 0.00 0 , so the index is still there when the user goes to enter another command
+
+                // This is shifting the pointer to the next element
                 db[itemNum] = (db[itemNum] + j);
             }
 
             num_items--;
-            
+
             // TEST
             //printf("after deletion the array elements are:\n");
             //for(i = 0; i < num_items; i++) {
             //    //printf("%d\n",((db[itemNum]+i)->itemnum));
             //    printf("%d\n", db[i]->itemnum);
             //}
-            
+
             return tempDel;
         }
         }
         // I believe that this will not happen because I am using find_item_num in the admin switch case 2 in main
         return 0;
-        }
+    }
 
-        // Fills in the *receipt[] with strings of all
-        // the items purchased, which are in the array purchased . Returns the number of
-        // elements in items . checkout assigns the variable purchased_items to 0.
-        int checkout(char **receipt);
+    // Fills in the *receipt[] with strings of all
+    // the items purchased, which are in the array purchased . Returns the number of
+    // elements in items . checkout assigns the variable purchased_items to 0.
+    int checkout(char **receipt);
 
-        // converts c to a string.
-        // category_to_str mallocs memory for the resulting string.
-        char *category_to_str(category c);
+    // converts c to a string.
+    // category_to_str mallocs memory for the resulting string.
+    char *category_to_str(category c);
 
-        // converts the string s to a category .
-        category str_to_category(char *s);
+    // converts the string s to a category .
+    category str_to_category(char *s);

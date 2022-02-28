@@ -66,13 +66,15 @@ Here:
                 printf("\n");
                 //shifting this value to an index
                 itemNum--;
-                
+
+                // I am not using the retuned item* in this case so I am commenting out
+                // DO NOT DELETE
                 // COMMENTING OUT FOR TEST
                 //item* temp2 = malloc(sizeof(item));
                 //temp2 = find_item_num(itemNum);
                 //// passing the itemNum -1 because it will be the index of the db[]
                 //temp2 = delete_item(itemNum);
-                
+
                 delete_item(itemNum);
 
                 // Test print
@@ -139,7 +141,7 @@ Here2:
             case 6:
                 // exits but does not save
                 exit(0);
-                
+
                 break;
             case 7:
                 // prints all items in data base
@@ -165,14 +167,14 @@ Here2:
             case 12:
                 // exits program and saves to the database
                 // The shopper can only change the database by purchasing items
-                
+
                 saveSuccess = save(inputFile);
                 if (!saveSuccess) {
                     printf("The database file was saved!\n");
                 } else {
                     printf("The database save was not successful.\n");
                 }
-                
+
                 exit(0);
 
                 break;
@@ -280,6 +282,9 @@ int lineCount( char *filename) {
 // returns 0 for good write and -1 for bad
 int save(char* filename) //11. e.
 {
+    // used for writing the correct number to the file
+    int addMe = 0;
+
     int num_items = get_numItems();
     item* temp5[MAX_ITEMS];
 
@@ -291,56 +296,35 @@ int save(char* filename) //11. e.
 
     if(filename!=NULL){
 
+        // TEST
+        //printf("This is num_items in save main.c: %d\n", num_items);
+
         for (int i = 0; i < num_items; i++) {
 
             temp5[i] = malloc(sizeof(item));
             temp5[i] = find_item_num(i);
+
+            // TEST
+            //printf("In save, after find_item_num\n");
+
             char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
 
-            fprintf(fout, "%d %s %s %c %d %.2lf %d\n", temp5[i]->itemnum, enumToString[temp5[i]->category], temp5[i]->name, temp5[i]->size, temp5[i]->quantity, temp5[i]->cost, temp5[i]->onsale);
+            // To avoid a seg fault if the item is null, then you skip else it writes to the file
+            if (temp5[i] == NULL) {
+                addMe++;
+                //printf("In save, the item is NULL and addMe is: %d\n",addMe);
+            } else {
+
+                // subtracting addMe to get the item number to line up right
+                fprintf(fout, "%d %s %s %c %d %.2lf %d\n", (temp5[i]->itemnum)-addMe, enumToString[temp5[i]->category], temp5[i]->name, temp5[i]->size, temp5[i]->quantity, temp5[i]->cost, temp5[i]->onsale);
+            }
         }
-
-
-        //char cat[20];
-        //char nam[MAX_ITEM_CHARS];
-        //char siz;
-        //int quan;
-        //double doub;
-        //int sale;
-
-        //// no need to scan the item number it will just go to the next number
-        //scanf("%s %s %c %d %lf %d", cat, nam, &siz, &quan, &doub, &sale);
-
-        //db[num_items]->itemnum = num_items+1;
-        //if (strcmp(cat, "clothes") == 0) {
-        //    db[num_items]->category = clothes;
-        //} else if (strcmp(cat, "electronics") == 0) {
-        //    db[num_items]->category = electronics;
-
-        //} else if (strcmp(cat, "tools") == 0) {
-        //    db[num_items]->category = tools;
-
-        //} else if (strcmp(cat, "toys") == 0) {
-        //    db[num_items]->category = toys;
-
-        //} else {
-        //    printf("Unable to match the enum for category\n");
-        //    exit(5);
-        //}
-        //strcpy(db[num_items]->name, nam);
-        //db[num_items]->size = siz;
-        //db[num_items]->quantity = quan;
-        //db[num_items]->cost = doub;
-        //db[num_items]->onsale = sale;
-
-        //fprintf(fout, "%d %s %s %c %d %.2lf %d\n", num_items+1, cat, nam, siz, quan, doub, sale);
 
         fclose(fout);//close when done!
 
         //// Test statement
         //printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
 
-        //num_items++;
         return 0;
     } else {
         // The file was not written sucessfully...

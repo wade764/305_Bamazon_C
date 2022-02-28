@@ -35,9 +35,3 @@
 35 toys barbie x 24 20.0 100
 36 toys legos x 13 35.0 100
 37 toys paddle_ball x 6 1.0 100
-38 tools testPleaseWork x 10 10.10 100
-39 tools SaveWorks? x 10 10.10 110
-40 tools Save? x 10 10.10 100
-41 tools test x 10 10.10 100
-42 tools shit x 10 10.10 100
-43 tools addMe x 10 10.10 100
