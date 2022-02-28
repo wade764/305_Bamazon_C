@@ -46,7 +46,8 @@ item *update_item(int itemnum, category category, char *name, char size, int qua
 
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
 
-    db[itemnum]->itemnum = itemnum;
+    // this line sets the item number back to the correct position 
+    db[itemnum]->itemnum = itemnum+1;
     if (strcmp(enumToString[category], "clothes") == 0) {
         db[itemnum]->category = clothes;
     } else if (strcmp(enumToString[category], "electronics") == 0) {
@@ -131,16 +132,16 @@ int read_db(char *filename, int numLines) {
 // Writes the internal data structure to the
 // database filename. Returns 0 on success and -1 on failure.
 // *** see pg 85 of textbook for fopen modes
+// *** NOTE if the itemnum is off double check the database file for the correct number of items first before changing code
 int write_db(char *filename) {
 
     FILE *fout = fopen(filename, "a"); // w+ Open for reading and writing, but file is overwritten if exists. 
     // 'a' appends to the end of the file
 
     if(filename!=NULL){
-        
-        // *** LEFT OFF HERE the num_items is -1 the actual size
-        printf("This is num_items in write_db: %d\n",num_items);
-        num_items++;
+
+        // TEST
+        //printf("This is num_items in write_db: %d\n",num_items);
 
         db[num_items] = malloc(sizeof(item));
 
@@ -154,7 +155,8 @@ int write_db(char *filename) {
         // no need to scan the item number it will just go to the next number
         scanf("%s %s %c %d %lf %d", cat, nam, &siz, &quan, &doub, &sale);
 
-        db[num_items]->itemnum = num_items;
+        // the plus one is important because in this case num_items is an index starting at 0
+        db[num_items]->itemnum = num_items+1;
         printf("db[num_items]->itemnum in write_db: %d\n",db[num_items]->itemnum);
         if (strcmp(cat, "clothes") == 0) {
             db[num_items]->category = clothes;
@@ -177,13 +179,14 @@ int write_db(char *filename) {
         db[num_items]->cost = doub;
         db[num_items]->onsale = sale;
 
-        fprintf(fout, "%d %s %s %c %d %.2lf %d\n", num_items, cat, nam, siz, quan, doub, sale);
+        fprintf(fout, "%d %s %s %c %d %.2lf %d\n", num_items+1, cat, nam, siz, quan, doub, sale);
 
         fclose(fout);//close when done!
 
         // Test statement
         printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
 
+        num_items++;
         return 0;
     } else {
         // The file was not written sucessfully...
@@ -197,16 +200,19 @@ int write_db(char *filename) {
 // 2 electronics computer x 3 100.000000 100
 // 3 tools drill x 5 75.900000 85
 // 4 toys barbie_doll x 13 4.350000 90
+//void show_items(int numItems){
 void show_items(){
 
     // *** Line below char const* from (Look up more on what a char const* is)
     //https://stackoverflow.com/questions/26008540/how-to-print-an-enumerated-variable-in-c
 
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+    // TEST
+    //printf("This is numItems being passed in show_items: %d\n",numItems);
 
     int i = 0;
-    while(i < num_items)
-    //while(db[i] != NULL)
+    //while(i < num_items)
+    while(db[i] != NULL)
     {
         printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);
         i++;
@@ -225,6 +231,11 @@ int sprint_item(char *s, item *c);
 // Returns 0 if itemnum is not in the internal data structure.
 item *find_item_num(int itemnum)
 {
+    // TEST
+    printf("In find_item_num bamazon.c\n");
+    printf("This is the itemnum: %d\n",itemnum);
+
+
     if (db[itemnum] == NULL) {
         printf("Invalid itemnum!\n");
         exit(7);
@@ -232,12 +243,21 @@ item *find_item_num(int itemnum)
     int i = 0;
 
     //while(&db[i]!=NULL)
+
     while(db[i])
     {
 
-        if(db[i]->itemnum==itemnum){return db[i];}
+        if(db[i]->itemnum==itemnum+1){return db[i];}
         i++;
     }
+
+    //while(db[itemnum-1])
+    //{
+    //    if(db[itemnum-1]->itemnum==itemnum){return db[itemnum-1];}
+    //    itemnum++;
+    //}
+    // TEST
+    printf("About to return in find_item_num bamazon.c\n");
 
     return 0;
 }

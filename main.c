@@ -124,10 +124,14 @@ Here:
                 printf("Please enter item number to delete from database: ");
                 scanf("%d",&itemNum);
                 printf("\n");
+                //shifting this value to an index
+                itemNum--;
+
                 item* temp2 = malloc(sizeof(item));
-                temp2 = find_item_num(itemNum-1);
+                temp2 = find_item_num(itemNum);
                 // passing the itemNum -1 because it will be the index of the db[]
-                temp2 = delete_item(itemNum-1);
+                //temp2 = delete_item(itemNum-1);
+                temp2 = delete_item(itemNum);
 
                 // Test print
                 char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
@@ -145,8 +149,12 @@ Here:
                 printf("Please enter item number to update the cost in the database: ");
                 scanf("%d",&itemNum);
                 printf("\n");
+                //shifting this value to an index
+                itemNum--;
+
                 item* temp3 = malloc(sizeof(item));
-                temp3 = find_item_num(itemNum-1);
+                //temp3 = find_item_num(itemNum-1);
+                temp3 = find_item_num(itemNum);
 Here2:
                 while (keepRunning) {
                     printf("Please enter the new cost for %s: ", temp3->name);
@@ -162,23 +170,23 @@ Here2:
                 // calling this with the user provided itemNum and newPrice
                 update_item(itemNum, temp3->category, temp3->name, temp3->size, temp3->quantity, newPrice, temp3->onsale);
 
-                // This messes with the database
-                //free(temp);
-
                 break;
             case 4:
                 // update itemnum quantity
                 printf("Please enter item number to update the quantity in the database: ");
                 scanf("%d",&itemNum);
                 printf("\n");
+                //shifting this value to an index
+                itemNum--;
+
                 item* temp4 = malloc(sizeof(item));
-                temp4 = find_item_num(itemNum-1);
+                temp4 = find_item_num(itemNum);
 
                 printf("What is the updated quantity for %s: ",temp4->name);
                 scanf("%d",&newQuantity);
                 printf("\n");
 
-                update_item(temp4->itemnum, temp4->category, temp4->name, temp4->size, newQuantity, temp4->cost, temp4->onsale);
+                update_item(itemNum, temp4->category, temp4->name, temp4->size, newQuantity, temp4->cost, temp4->onsale);
 
                 break;
             case 5:
@@ -217,7 +225,8 @@ Here2:
                 break;
             case 7:
 
-                num_items = get_numItems();
+                //num_items = get_numItems();
+
                 //printf("num_items: %d\n",num_items);
 
                 //canRead = read_db(inputFile, num_items);
@@ -229,6 +238,7 @@ Here2:
 
                 // prints all items in data base
                 //show_items(numLines);
+                //show_items(num_items);
                 show_items();
 
 
@@ -303,7 +313,8 @@ Here:
         switch(response) {
             case 1:
 
-                num_items = get_numItems();
+                //num_items = get_numItems();
+
                 // *** I am trying to read_db into the *db[] then print the items
                 // so far this does not work...
 
@@ -314,7 +325,8 @@ Here:
                 //}
                 // prints all items in data base
                 //show_items(numLines);
-                show_items();
+                //show_items(num_items);
+                show_items(num_items);
 
 
                 break;
