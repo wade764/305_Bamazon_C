@@ -3,67 +3,7 @@
 #include <string.h>
 #include "bamazon.h"
 
-// I HAVE ANOTHER OFF BY ONE ERROR RELATED TO WRITE_DB LEAVING OFF HERE
-
-
-//int numLines = 0;
 int num_items = 0;
-
-// This allows the owner and shopper to enter commands that are described in requirements 11 and 12
-
-// 11. The bamazon user has the following commands.
-//      a. add itemnum temcategory itemname size quantity cost onsale - adds an
-//      item to the database. The parameters adhere to the rules shown in 1. An invalid
-//      command results in the message Invalid add command!
-
-//      b. delete itemnum - deletes the item with itemnum from the database. itemnum not
-//      in the database results in the message Invalid itemnum!
-
-//      c. updatecost itemnum cost - updates the cost of item with itemnum . itemnum not
-//      in the database results in the message Invalid itemnum! Cost must be a
-//      positive floating point number.
-
-//      d. updatequantity itemnum quantity - updates the quantity of item with itemnum .
-//      itemnum not in the database results in the message Invalid itemnum!
-//      quantity must be a positive integer.
-
-//      e. save - saves the changes to the database, but does not exit the program.
-
-//      f. quit - quits the program and does not save changes to the database
-//      Computer Systems and Architecture - Project Bamazon
-
-
-// 12. The shopper and bamazon users have the following commands. When showing an item,
-//      show all attributes separated by a space.
-
-//      a. showitems - shows all items in the database.
-
-//      b. showcategory category - shows all items that are category . No items of type
-//      category results in the message No items of category! where category is
-//      the string entered by the shopper.
-
-//      c. showcategorycost category cost - shows all items in category that cost less
-//      than cost . No items less than cost results in the message No items less than
-//      cost! Where category and cost are entered by the shopper.
-
-//      d. showcategorysize category size - shows all items in category that are equal
-//      to size . No items of size results in the message No items of size! Where
-//      category and size are entered by the shopper.
-
-//      e. purchase itemnum - purchase item with itemnum . The quantity of the item in the
-//      database with itemnum is decremented. itemnum not in the database results in
-//      the message Invalid itemnum!
-
-//      f. exit - exits the program and saves the changes to the database. The shopper
-//      can only change the database by purchasing items. The owner can change the
-//      database by adding, deleting, and updating items.
-
-//      g. Any other command results in the message Invalid command!
-
-//int get_numLines(){
-//    
-//    return numLines;
-//}
 
 // declaring the save function
 int save(char* filename);
@@ -126,22 +66,18 @@ Here:
                 printf("\n");
                 //shifting this value to an index
                 itemNum--;
-
-                item* temp2 = malloc(sizeof(item));
-                temp2 = find_item_num(itemNum);
-                // passing the itemNum -1 because it will be the index of the db[]
-                //temp2 = delete_item(itemNum-1);
-                temp2 = delete_item(itemNum);
+                
+                // COMMENTING OUT FOR TEST
+                //item* temp2 = malloc(sizeof(item));
+                //temp2 = find_item_num(itemNum);
+                //// passing the itemNum -1 because it will be the index of the db[]
+                //temp2 = delete_item(itemNum);
+                
+                delete_item(itemNum);
 
                 // Test print
-                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
-                printf("This is the deleted item: %d %s %s %c %d %.2lf %d\n", temp2->itemnum, enumToString[temp2->category], temp2->name, temp2->size, temp2->quantity, temp2->cost, temp2->onsale);
-
-                // *** this will never happen because of find_item_num
-                // if delete_item returns 0 it is not found in internal data structure
-                //if (!canDelete) {
-                //    printf("Item number not found in database.\n");
-                //}
+                //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
+                //printf("This is the deleted item: %d %s %s %c %d %.2lf %d\n", temp2->itemnum, enumToString[temp2->category], temp2->name, temp2->size, temp2->quantity, temp2->cost, temp2->onsale);
 
                 break;
             case 3:
@@ -202,45 +138,12 @@ Here2:
                 break;
             case 6:
                 // exits but does not save
-                // Stuck trying to make this more than just an exit, but it works
                 exit(0);
-
-                // Trying to prompt the user if the are sure is buggy
-
-                //printf("Exit the program without saving? y/n\n");
-                //char quit;
-                ////printf(": ");
-                //scanf("%c\n",&quit);
-                //printf("%d %c %d\n",quit, 'y', 'y');
-                //if (strcmp('y',quit) == 0) {
-                //////if (quit != 'y'/* || 'Y'*/) {
-                ////    //goto Here;
-                //    exit(0);
-                //}
-                //} else if (quit != 'y'){
-                //    printf("else loop\n");
-                //    //exit(0);
-                //goto Here;
-                //}
+                
                 break;
             case 7:
-
-                //num_items = get_numItems();
-
-                //printf("num_items: %d\n",num_items);
-
-                //canRead = read_db(inputFile, num_items);
-                //// The file could not be read in read_db if canRead is anything but 0
-                //if (canRead) {
-                //    printf("File not found!");
-                //}
-
-
                 // prints all items in data base
-                //show_items(numLines);
-                //show_items(num_items);
                 show_items();
-
 
                 break;
             case 8:
@@ -262,25 +165,16 @@ Here2:
             case 12:
                 // exits program and saves to the database
                 // The shopper can only change the database by purchasing items
+                
+                saveSuccess = save(inputFile);
+                if (!saveSuccess) {
+                    printf("The database file was saved!\n");
+                } else {
+                    printf("The database save was not successful.\n");
+                }
+                
                 exit(0);
 
-                // Trying to prompt the user if the are sure is buggy
-
-                //printf("Exit the program without saving? y/n\n");
-                //char quit;
-                ////printf(": ");
-                //scanf("%c\n",&quit);
-                //printf("%d %c %d\n",quit, 'y', 'y');
-                //if (strcmp('y',quit) == 0) {
-                //////if (quit != 'y'/* || 'Y'*/) {
-                ////    //goto Here;
-                //    exit(0);
-                //}
-                //} else if (quit != 'y'){
-                //    printf("else loop\n");
-                //    //exit(0);
-                //goto Here;
-                //}
                 break;
             default:
                 printf("Invalid command!\n");
@@ -313,21 +207,7 @@ Here:
         switch(response) {
             case 1:
 
-                //num_items = get_numItems();
-
-                // *** I am trying to read_db into the *db[] then print the items
-                // so far this does not work...
-
-                //canRead = read_db(inputFile, numLines);
-                //// The file could not be read in read_db if canRead is anything but 0
-                //if (canRead) {
-                //    printf("File not found!");
-                //}
-                // prints all items in data base
-                //show_items(numLines);
-                //show_items(num_items);
-                show_items(num_items);
-
+                show_items();
 
                 break;
             case 2:
@@ -387,12 +267,14 @@ int lineCount( char *filename) {
     return numLines;
 }
 
-void deleteItem (int itemNum)// 11. b.
-{
+// currently using delete_item in bamazon.c
 
-    //need to design data structure before this.
-
-}
+//void deleteItem (int itemNum)// 11. b.
+//{
+//
+//    //need to design data structure before this.
+//
+//}
 
 // creating a function that will save the database to the output file
 // returns 0 for good write and -1 for bad
@@ -400,7 +282,6 @@ int save(char* filename) //11. e.
 {
     int num_items = get_numItems();
     item* temp5[MAX_ITEMS];
-    //char cat[20];
 
     // referenced the following source for fopen
     // https://www.tutorialspoint.com/c_standard_library/c_function_fopen.htm
@@ -466,23 +347,6 @@ int save(char* filename) //11. e.
         return -1;
     }
 }
-//FILE *f;
-
-//fout = fopen("output.txt", "w");
-//
-//// theres something funky here below
-//if(fout == null)
-//{
-//    printf("Error opening file!\n");
-//        exit(0);
-//}
-
-////print contents after this.
-//fprint("printing to file now.\n");
-
-//return fout;
-
-//}
 
 int main(int argc, char **argv) {
 
@@ -506,8 +370,7 @@ int main(int argc, char **argv) {
     }
 
     // passing the file pointer and the number of lines in the program
-    // *** 
-    // we want to only read the database once!!!
+    // *** we want to only read the database once!!!
     int canRead = read_db(inputFile, numLines);
 
     // test
@@ -533,11 +396,10 @@ int main(int argc, char **argv) {
     // Test
     //printf("This is user name: %s\n",userName);
 
+    // strcmp returns anything other than 0 it will exit
     int validUser1 = strcmp(userName, admin);
     int validUser2 = strcmp(userName, shopper);
     //printf("strcmp admin: %d shopper: %d\n",validUser1,validUser2);
-
-    // strcmp returns anything other than 0 it will exit
 
     // The following commands are for the admin account - bamazon
     if (!validUser1) {

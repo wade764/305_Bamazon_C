@@ -8,8 +8,7 @@
 // MAX_ITEMS = 300
 static item *db[MAX_ITEMS];
 
-// This is the number of items in the internal data
-// structure.
+// This is the number of items in the internal data structure.
 static int num_items = 0;
 
 // This data structure contains the
@@ -22,27 +21,13 @@ static item *purchased[MAX_PURCHASE];
 // purchase_item , and it is assigned 0 on the call to checkout .
 static int purchased_items = 0;
 
-// function to return num_items
+// function added to return num_items
 int get_numItems() {
     return num_items;
 }
 
 // modified to take quantity
 item *update_item(int itemnum, category category, char *name, char size, int quantity, double cost, int onsale) {
-    //double newPrice;
-    //int keepRunning = 1;
-    //Here:
-    //while (keepRunning) {
-    //    printf("Please enter the new cost for %s: ", db[itemnum-1]->name);
-    //    scanf("%lf", &newPrice);
-    //    printf("\n");
-    //    if (newPrice < 0){
-    //        printf("Please enter a positive number\n");
-    //        goto Here;
-    //    }
-    //    keepRunning = 0;
-    //}
-    //db[itemnum-1]->cost = newPrice;
 
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
 
@@ -157,7 +142,10 @@ int write_db(char *filename) {
 
         // the plus one is important because in this case num_items is an index starting at 0
         db[num_items]->itemnum = num_items+1;
-        printf("db[num_items]->itemnum in write_db: %d\n",db[num_items]->itemnum);
+        
+        // TEST
+        //printf("db[num_items]->itemnum in write_db: %d\n",db[num_items]->itemnum);
+        
         if (strcmp(cat, "clothes") == 0) {
             db[num_items]->category = clothes;
         } else if (strcmp(cat, "electronics") == 0) {
@@ -184,7 +172,7 @@ int write_db(char *filename) {
         fclose(fout);//close when done!
 
         // Test statement
-        printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
+        //printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
 
         num_items++;
         return 0;
@@ -232,17 +220,14 @@ int sprint_item(char *s, item *c);
 item *find_item_num(int itemnum)
 {
     // TEST
-    printf("In find_item_num bamazon.c\n");
-    printf("This is the itemnum: %d\n",itemnum);
-
+    //printf("In find_item_num bamazon.c\n");
+    //printf("This is the itemnum: %d\n",itemnum);
 
     if (db[itemnum] == NULL) {
         printf("Invalid itemnum!\n");
         exit(7);
     }
     int i = 0;
-
-    //while(&db[i]!=NULL)
 
     while(db[i])
     {
@@ -251,13 +236,8 @@ item *find_item_num(int itemnum)
         i++;
     }
 
-    //while(db[itemnum-1])
-    //{
-    //    if(db[itemnum-1]->itemnum==itemnum){return db[itemnum-1];}
-    //    itemnum++;
-    //}
     // TEST
-    printf("About to return in find_item_num bamazon.c\n");
+    //printf("About to return in find_item_num bamazon.c\n");
 
     return 0;
 }
@@ -325,26 +305,35 @@ item *delete_item(int itemNum) {
                 j = i + 1;
                 //*(db[itemNum]+i) = *(db[itemNum]+j);
                 if (justOnce) {
+                    printf("Deleting %s\n",db[itemNum]->name);
                     free(db[itemNum]);
                     justOnce = 0;
+                    
+                    // TEST
                     //printf("In justOnce delete_item\n");
                 }
-                // this sets the items after the deleted one to the previous item number 
-                db[i]->itemnum = i;
+                // *** DON'T DELETE THE COMMENTS BELOW HERE UNTIL RESOLVED
 
+                // this sets the items after the deleted one to the previous item number (The line number not the index) 
+                // this line keeps the item numbers the same prior to delete
+                db[i]->itemnum = i+1;
+                // Currently the problem becomes once an item is deleted it stays in the internal database as
+                // 0 clothes  0 0.00 0 , so the index is still there when the user goes to enter another command
+            
+                // this line below shift the item numbers down one to line up with the deleted item
+                //db[i]->itemnum = i;
                 db[itemNum] = (db[itemNum] + j);
             }
 
             num_items--;
-
-            printf("after deletion the array elements are:\n");
-            //for(i = 0; i < num_items - 1; i++) {
-            for(i = 0; i < num_items; i++) {
-                //printf("%d\n",((db[itemNum]+i)->itemnum));
-                printf("%d\n", db[i]->itemnum);
-            }
-            // still confused why we return the item*
-            //return (db[itemNum] - 1);
+            
+            // TEST
+            //printf("after deletion the array elements are:\n");
+            //for(i = 0; i < num_items; i++) {
+            //    //printf("%d\n",((db[itemNum]+i)->itemnum));
+            //    printf("%d\n", db[i]->itemnum);
+            //}
+            
             return tempDel;
         }
         }
