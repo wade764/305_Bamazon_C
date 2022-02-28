@@ -43,10 +43,32 @@ item *update_item(int itemnum, category category, char *name, char size, int qua
     //    keepRunning = 0;
     //}
     //db[itemnum-1]->cost = newPrice;
-    db[itemnum-1]->cost = cost;
-    db[itemnum-1]->quantity = quantity;
 
-    return db[itemnum-1];
+    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+
+    db[itemnum]->itemnum = itemnum;
+    if (strcmp(enumToString[category], "clothes") == 0) {
+        db[itemnum]->category = clothes;
+    } else if (strcmp(enumToString[category], "electronics") == 0) {
+        db[itemnum]->category = electronics;
+
+    } else if (strcmp(enumToString[category], "tools") == 0) {
+        db[itemnum]->category = tools;
+
+    } else if (strcmp(enumToString[category], "toys") == 0) {
+        db[itemnum]->category = toys;
+
+    } else {
+        printf("Unable to match the enum for category\n");
+        exit(5);
+    }
+    strcpy(db[itemnum]->name, name);
+    db[itemnum]->size = size;
+    db[itemnum]->quantity = quantity;
+    db[itemnum]->cost = cost;
+    db[itemnum]->onsale = onsale;
+
+    return db[itemnum];
 
 }
 
@@ -68,9 +90,10 @@ int read_db(char *filename, int numLines) {
         // temp holder for category
         char cat[20];
 
-        for (int i = 0; i < numLines; i++, num_items++) {
+        for (int i = 0; i < numLines; i++) {
             // instantiating a new db object for each line of the file
             db[i] = malloc(sizeof(item));
+            num_items++;
 
             fscanf(fin, "%d %s %s %c %d %lf %d", &db[i]->itemnum, cat, db[i]->name, &db[i]->size, &db[i]->quantity, &db[i]->cost, &db[i]->onsale); 
 
@@ -103,6 +126,8 @@ int read_db(char *filename, int numLines) {
     }
 }
 
+// This is for adding the database internal structure
+// see save function in main for writing to output
 // Writes the internal data structure to the
 // database filename. Returns 0 on success and -1 on failure.
 // *** see pg 85 of textbook for fopen modes
@@ -112,6 +137,10 @@ int write_db(char *filename) {
     // 'a' appends to the end of the file
 
     if(filename!=NULL){
+        
+        // *** LEFT OFF HERE the num_items is -1 the actual size
+        printf("This is num_items in write_db: %d\n",num_items);
+        num_items++;
 
         db[num_items] = malloc(sizeof(item));
 
@@ -125,7 +154,8 @@ int write_db(char *filename) {
         // no need to scan the item number it will just go to the next number
         scanf("%s %s %c %d %lf %d", cat, nam, &siz, &quan, &doub, &sale);
 
-        db[num_items]->itemnum = num_items+1;
+        db[num_items]->itemnum = num_items;
+        printf("db[num_items]->itemnum in write_db: %d\n",db[num_items]->itemnum);
         if (strcmp(cat, "clothes") == 0) {
             db[num_items]->category = clothes;
         } else if (strcmp(cat, "electronics") == 0) {
@@ -147,14 +177,13 @@ int write_db(char *filename) {
         db[num_items]->cost = doub;
         db[num_items]->onsale = sale;
 
-        fprintf(fout, "%d %s %s %c %d %.2lf %d\n", num_items+1, cat, nam, siz, quan, doub, sale);
+        fprintf(fout, "%d %s %s %c %d %.2lf %d\n", num_items, cat, nam, siz, quan, doub, sale);
 
         fclose(fout);//close when done!
 
         // Test statement
         printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
 
-        num_items++;
         return 0;
     } else {
         // The file was not written sucessfully...
@@ -177,6 +206,7 @@ void show_items(){
 
     int i = 0;
     while(i < num_items)
+    //while(db[i] != NULL)
     {
         printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);
         i++;
@@ -195,7 +225,7 @@ int sprint_item(char *s, item *c);
 // Returns 0 if itemnum is not in the internal data structure.
 item *find_item_num(int itemnum)
 {
-    if (db[itemnum-1] == NULL) {
+    if (db[itemnum] == NULL) {
         printf("Invalid itemnum!\n");
         exit(7);
     }

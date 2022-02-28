@@ -3,6 +3,9 @@
 #include <string.h>
 #include "bamazon.h"
 
+// I HAVE ANOTHER OFF BY ONE ERROR RELATED TO WRITE_DB LEAVING OFF HERE
+
+
 //int numLines = 0;
 int num_items = 0;
 
@@ -62,6 +65,9 @@ int num_items = 0;
 //    return numLines;
 //}
 
+// declaring the save function
+int save(char* filename);
+
 void adminCommands(char *inputFile, int numLines, int canRead) {
     // the users response to the switch statement
     int response;
@@ -96,6 +102,8 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
         double newPrice;
         // used for case 4
         int newQuantity;
+        // used in case 5
+        int saveSuccess;
 
 Here:
         switch(response) {
@@ -117,7 +125,7 @@ Here:
                 scanf("%d",&itemNum);
                 printf("\n");
                 item* temp2 = malloc(sizeof(item));
-                temp2 = find_item_num(itemNum);
+                temp2 = find_item_num(itemNum-1);
                 // passing the itemNum -1 because it will be the index of the db[]
                 temp2 = delete_item(itemNum-1);
 
@@ -138,7 +146,7 @@ Here:
                 scanf("%d",&itemNum);
                 printf("\n");
                 item* temp3 = malloc(sizeof(item));
-                temp3 = find_item_num(itemNum);
+                temp3 = find_item_num(itemNum-1);
 Here2:
                 while (keepRunning) {
                     printf("Please enter the new cost for %s: ", temp3->name);
@@ -164,7 +172,7 @@ Here2:
                 scanf("%d",&itemNum);
                 printf("\n");
                 item* temp4 = malloc(sizeof(item));
-                temp4 = find_item_num(itemNum);
+                temp4 = find_item_num(itemNum-1);
 
                 printf("What is the updated quantity for %s: ",temp4->name);
                 scanf("%d",&newQuantity);
@@ -175,6 +183,13 @@ Here2:
                 break;
             case 5:
                 // saves db but does not exit
+                saveSuccess = save(inputFile);
+                if (!saveSuccess) {
+                    printf("The database file was saved!\n");
+                } else {
+                    printf("The database save was not successful.\n");
+                }
+
 
                 break;
             case 6:
@@ -367,25 +382,95 @@ void deleteItem (int itemNum)// 11. b.
 
 }
 
-FILE* save (FILE *fout) //11. e.
+// creating a function that will save the database to the output file
+// returns 0 for good write and -1 for bad
+int save(char* filename) //11. e.
 {
-    //FILE *f;
+    int num_items = get_numItems();
+    item* temp5[MAX_ITEMS];
+    //char cat[20];
 
-    //fout = fopen("output.txt", "w");
-    //
-    //// theres something funky here below
-    //if(fout == null)
-    //{
-    //    printf("Error opening file!\n");
-    //        exit(0);
-    //}
+    // referenced the following source for fopen
+    // https://www.tutorialspoint.com/c_standard_library/c_function_fopen.htm
 
-    ////print contents after this.
-    //fprint("printing to file now.\n");
+    FILE *fout = fopen(filename, "w"); // "w" Creates an empty file for writing. If a file with the same name already exists, its content is erased and the file is considered as a new empty file.
+    // 'a' appends to the end of the file
 
-    return fout;
+    if(filename!=NULL){
 
+        for (int i = 0; i < num_items; i++) {
+
+            temp5[i] = malloc(sizeof(item));
+            temp5[i] = find_item_num(i);
+            char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
+
+            fprintf(fout, "%d %s %s %c %d %.2lf %d\n", temp5[i]->itemnum, enumToString[temp5[i]->category], temp5[i]->name, temp5[i]->size, temp5[i]->quantity, temp5[i]->cost, temp5[i]->onsale);
+        }
+
+
+        //char cat[20];
+        //char nam[MAX_ITEM_CHARS];
+        //char siz;
+        //int quan;
+        //double doub;
+        //int sale;
+
+        //// no need to scan the item number it will just go to the next number
+        //scanf("%s %s %c %d %lf %d", cat, nam, &siz, &quan, &doub, &sale);
+
+        //db[num_items]->itemnum = num_items+1;
+        //if (strcmp(cat, "clothes") == 0) {
+        //    db[num_items]->category = clothes;
+        //} else if (strcmp(cat, "electronics") == 0) {
+        //    db[num_items]->category = electronics;
+
+        //} else if (strcmp(cat, "tools") == 0) {
+        //    db[num_items]->category = tools;
+
+        //} else if (strcmp(cat, "toys") == 0) {
+        //    db[num_items]->category = toys;
+
+        //} else {
+        //    printf("Unable to match the enum for category\n");
+        //    exit(5);
+        //}
+        //strcpy(db[num_items]->name, nam);
+        //db[num_items]->size = siz;
+        //db[num_items]->quantity = quan;
+        //db[num_items]->cost = doub;
+        //db[num_items]->onsale = sale;
+
+        //fprintf(fout, "%d %s %s %c %d %.2lf %d\n", num_items+1, cat, nam, siz, quan, doub, sale);
+
+        fclose(fout);//close when done!
+
+        //// Test statement
+        //printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
+
+        //num_items++;
+        return 0;
+    } else {
+        // The file was not written sucessfully...
+        return -1;
+    }
 }
+//FILE *f;
+
+//fout = fopen("output.txt", "w");
+//
+//// theres something funky here below
+//if(fout == null)
+//{
+//    printf("Error opening file!\n");
+//        exit(0);
+//}
+
+////print contents after this.
+//fprint("printing to file now.\n");
+
+//return fout;
+
+//}
 
 int main(int argc, char **argv) {
 
