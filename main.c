@@ -214,7 +214,7 @@ Here:
                 break;
             case 2:
                 // shows all items that are category
-
+                get_category();//(item**items,category c)
                 break;
             case 3:
                 // shows all items in category that cost less than user defined cost

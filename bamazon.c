@@ -271,8 +271,29 @@ item *add_item(int itemnum, char *category, char *name, char size,
 // Fills in the *item[] with
 // items where each element is category c . Returns the number of elements in
 // items .
-int get_category(item **items, category c);
+int get_category(item **items, category c)
+{
 
+
+    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+    int i = 0;                                                                                                                                                       
+    int counter = 0;                                                                                                                                               
+    while(db[i] != NULL)                                                                                                                                             
+    {  
+
+        if(db[i]->category==c)
+        {
+        printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
+        counter++;
+
+        }
+
+        i++;                                                                                                                                                         
+    }                                                                                                                                                                
+
+return counter;
+
+}
 // Fills in
 // the *item[] with items where each element is category c and size . Returns
 // the number of elements in items .
