@@ -200,7 +200,7 @@ void show_items(){
 
     int i = 0;                                                                                                                                                       
     //while(i < num_items)                                                                                                                                           
-    while(db[i] != NULL)                                                                                                                                             
+    while(db[i] != NULL) 
     {                                                                                                                                                                
         printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
         i++;                                                                                                                                                         
@@ -265,8 +265,58 @@ int find_item_str(item **items, char *s);
 // Adds an item to the internal
 // data structure. If itemnum is already in the internal data structure, the values of
 // itemnum are updated; otherwise a new item is added.
-item *add_item(int itemnum, char *category, char *name, char size,
-        int quantity, double cost, int onsale);
+item *add_item(int itemnum, char *category, char *name, char size, int quantity, double cost, int onsale)
+{
+
+    //how do we check for if the item is already here?
+    //if(db[itemnum-1]==NULL)
+
+    db[num_items] = malloc(sizeof(item));
+
+    //char cat[20];
+    char name[MAX_ITEM_CHARS];
+
+
+    //scanf("%s %s %c %d %lf %d", cat, nam, &siz, &quan, &doub, &sale);
+
+    // the plus one is important because in this case num_items is an index starting at 0
+    db[num_items]->itemnum = num_items+1;
+
+    if (strcmp(*category, "clothes") == 0) {
+        db[num_items]->category = clothes;
+    } else if (strcmp(*category, "electronics") == 0) {
+        db[num_items]->category = electronics;
+
+    } else if (strcmp(*category, "tools") == 0) {
+        db[num_items]->category = tools;
+
+    } else if (strcmp(*category, "toys") == 0) {
+        db[num_items]->category = toys;
+
+    } else {
+        printf("Unable to match the enum for category\n");
+        exit(5);
+    }
+    strcpy(db[num_items]->name, name);
+    db[num_items]->size = size;
+    db[num_items]->quantity = quantity;
+    db[num_items]->cost = cost;
+    db[num_items]->onsale = onsale;
+
+
+
+    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
+
+
+
+    // Test statement
+    printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, enumToString[db[num_items]->category], db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
+
+    num_items++;
+    
+    return db[num_items];
+}
+
 
 // Fills in the *item[] with
 // items where each element is category c . Returns the number of elements in
@@ -280,29 +330,88 @@ int get_category(item **items, category c)
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
     {  
+        item *a = db[i];
 
         if(db[i]->category==c)
         {
-        printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
-        counter++;
-
+            printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
+            items[counter]=*a;
+            counter++;
         }
 
         i++;                                                                                                                                                         
     }                                                                                                                                                                
 
-return counter;
+    return counter;
 
 }
 // Fills in
 // the *item[] with items where each element is category c and size . Returns
 // the number of elements in items .
-int get_category_size(item **items, category c, char size);
+int get_category_size(item **items, category c, char size)//pass **items by reference (&arrayName).
+{
+//The purpose of this function is to fill the array you give it with the items from the db that fit matching criteria.
+//it is up to main.c to use this information from the array that is modified in this function effectively.
+//
+
+    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+    int i = 0;                                                                                                                                                       
+    int counter = 0;                                                                                                                                               
+    while(db[i] != NULL)                                                                                                                                             
+    {  
+        item *a = db[i];
+
+        if(db[i]->category==c)
+        {
+            if(db[i]->size==size)
+            {
+                //we need to printf in main off of the **items.
+                //printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
+                items[counter]=*a;
+                counter++;
+            }
+        }
+
+        i++;                                                                                                                                                         
+    }                                                                                                                                                                
+    counter= counter+1;//THIS RETURNS THJE NUMBER OF ELEMENTS, NOT THE MAXIMUM INDEX.
+    return counter;
+
+}
 
 // Fills
 // in the *item[] with items where each element is category c and less than cost .
 // Returns the number of elements in items .
-int get_category_cost(item **items, category c, double cost);
+int get_category_cost(item **items, category c, double cost)
+{
+//The purpose of this function is to fill the array you give it with the items from the db that fit matching criteria.
+//it is up to main.c to use this information from the array that is modified in this function effectively.
+
+    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+    int i = 0;                                                                                                                                                       
+    int counter = 0;                                                                                                                                               
+    while(db[i] != NULL)                                                                                                                                             
+    {  
+        item *a = db[i];
+
+        if(db[i]->category==c)
+        {
+            if(db[i]->cost<cost)
+            {
+                //we need to printf in main off of the **items.
+                //printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
+                items[counter]=*a;
+                counter++;
+            }
+        }
+
+        i++;                                                                                                                                                         
+    }                                                                                                                                                                
+    counter= counter+1;//THIS RETURNS THJE NUMBER OF ELEMENTS, NOT THE MAXIMUM INDEX.
+    return counter;
+
+}
+
 
 // Returns item* of itemnum . The
 // quantity of item* in the internal data structure is decremented. Returns 0 if

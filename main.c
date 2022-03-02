@@ -8,6 +8,35 @@ int num_items = 0;
 // declaring the save function
 int save(char* filename);
 
+
+category stringToEnum(const char *str)
+{
+
+    category c;
+
+    if (strcmp(str, "clothes") == 0) {
+        c=clothes;
+    } else if (strcmp(str, "electronics") == 0) {
+        c = electronics;
+
+    } else if (strcmp(str, "tools") == 0) {
+        c = tools;
+
+    } else if (strcmp(str, "toys") == 0) {
+        c = toys;
+
+    } else {
+        printf("Unable to match the enum for category\n");
+        exit(5);
+    }
+
+    return c;
+
+}
+
+
+
+
 void adminCommands(char *inputFile, int numLines, int canRead) {
     // the users response to the switch statement
     int response;
@@ -186,10 +215,13 @@ Here2:
 
 }
 
+
 void userCommands(char *inputFile, int numLines, int canRead) {
     // the users response to the switch statement
     int response;
 
+    //category for user input.
+    category cat;
     // will keep running commands until this is switched to 0
     int keepRunning = 1;
 
@@ -214,11 +246,30 @@ Here:
                 break;
             case 2:
                 // shows all items that are category
-                get_category();//(item**items,category c)
+                item **items[];
+                printf("Please input a category in all lowercases.\n")
+                
+                scanf("\n%s",str);
+
+                cat = stringToEnum(str);//see top of file.
+
+                int numItems = get_category(items,cat);//(item**items,category c)
+
+                
+                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+
+
+
+                for (int i = 0; i < numItems; i++)
+                {
+                        printf("%d %s %s %c %d %.2lf %d\n", items[i]->itemnum, enumToString[items[i]->category], items[i]->name, items[i]->size, items[i]->quantity, items[i]->cost, items[i]->onsale);
+
+
+                }
                 break;
             case 3:
                 // shows all items in category that cost less than user defined cost
-
+                
                 break;
             case 4:
                 // show category size, shows all items in category that are equal to size
