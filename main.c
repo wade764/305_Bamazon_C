@@ -222,8 +222,13 @@ void userCommands(char *inputFile, int numLines, int canRead) {
 
     //category for user input.
     category cat;
+    //string for user input.
+    char str[20];
     // will keep running commands until this is switched to 0
     int keepRunning = 1;
+    
+    //used for filling with input from bamazon.c
+    item **items[MAX_ITEMS];
 
     while(keepRunning) {
 
@@ -246,34 +251,69 @@ Here:
                 break;
             case 2:
                 // shows all items that are category
-                item **items[];
-                printf("Please input a category in all lowercases.\n")
                 
+                printf("Please input a category in all lowercases.\n");
                 scanf("\n%s",str);
-
                 cat = stringToEnum(str);//see top of file.
 
-                int numItems = get_category(items,cat);//(item**items,category c)
+
+               int numItems = get_category(&items,cat);//(item**items,category c)
 
                 
                 char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
 
+                for (int i = 0; i < numItems; i++)
+                {
+                        printf("%d %s %s %c %d %.2lf %d\n", items[i]->itemnum, enumToString[items[i]->category], items[i]->name, items[i]->size, items[i]->quantity, items[i]->cost, items[i]->onsale);
+                }
+                break;
 
+            case 3:
+                // shows all items in category that cost less than user defined cost
+                //gather category from user
+                printf("Please input a category in all lowercases.\n");
+                scanf("\n%s",str);
+                cat = stringToEnum(str);//see top of file.
+
+                //gather cost from user
+                double costReply;
+                printf("Now please input a decimal value for a price limit on items shown to you.\n");
+                scanf("\n%lf",costReply);
+
+                //operate
+                int numItems = get_category_cost(&items,cat,costReply);//(item**items,category c)
+
+
+                //present data.
+                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+                for (int i = 0; i < numItems; i++)
+                {
+                        printf("%d %s %s %c %d %.2lf %d\n", *items[i]->itemnum, enumToString[*items[i]->category], *items[i]->name, items[i]->size, items[i]->quantity, items[i]->cost, items[i]->onsale);
+                }               
+                break;
+
+
+            case 4:
+                // show category size, shows all items in category that are equal to size
+               
+                printf("Please input a category in all lowercases.\n");
+                scanf("\n%s",str);
+                cat = stringToEnum(str);//see top of file.
+
+                //gather size input
+                char sizz[1];
+                printf("Please input desired size.");
+                scanf("\n%c",sizz);
+
+                int numItems = get_category_size(items,cat,sizz);//(item**items,category c)
+
+                
+                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
 
                 for (int i = 0; i < numItems; i++)
                 {
                         printf("%d %s %s %c %d %.2lf %d\n", items[i]->itemnum, enumToString[items[i]->category], items[i]->name, items[i]->size, items[i]->quantity, items[i]->cost, items[i]->onsale);
-
-
                 }
-                break;
-            case 3:
-                // shows all items in category that cost less than user defined cost
-                
-                break;
-            case 4:
-                // show category size, shows all items in category that are equal to size
-
                 break;
             case 5:
                 // purchase item with itemnum
