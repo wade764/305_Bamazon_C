@@ -330,12 +330,11 @@ int get_category(item **items, category c)
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
     {  
-        item *a = db[i];
+
 
         if(db[i]->category==c)
-        {
-            printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
-            items[counter]=*a;
+        { 
+            items[counter]=db[i];
             counter++;
         }
 
@@ -359,15 +358,14 @@ int get_category_size(item **items, category c, char size)//pass **items by refe
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
     {  
-        item *a = db[i];
-
+        
         if(db[i]->category==c)
         {
             if(db[i]->size==size)
             {
                 //we need to printf in main off of the **items.
                 //printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
-                items[counter]=*a;
+                items[counter]=db[i];
                 counter++;
             }
         }
@@ -392,7 +390,6 @@ int get_category_cost(item **items, category c, double cost)
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
     {  
-        item *a = db[i];
 
         if(db[i]->category==c)
         {
@@ -400,7 +397,7 @@ int get_category_cost(item **items, category c, double cost)
             {
                 //we need to printf in main off of the **items.
                 //printf("%d %s %s %c %d %.2lf %d\n", db[i]->itemnum, enumToString[db[i]->category], db[i]->name, db[i]->size, db[i]->quantity, db[i]->cost, db[i]->onsale);   
-                items[counter]=*a;
+                items[counter]=db[i];
                 counter++;
             }
         }

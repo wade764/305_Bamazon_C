@@ -269,6 +269,8 @@ Here:
                 break;
 
             case 3:
+
+                /*
                 // shows all items in category that cost less than user defined cost
                 //gather category from user
                 printf("Please input a category in all lowercases.\n");
@@ -289,13 +291,15 @@ Here:
                 for (int i = 0; i < numItems; i++)
                 {
                         printf("%d %s %s %c %d %.2lf %d\n", *items[i]->itemnum, enumToString[*items[i]->category], *items[i]->name, items[i]->size, items[i]->quantity, items[i]->cost, items[i]->onsale);
-                }               
+                } 
+                */
                 break;
 
 
             case 4:
                 // show category size, shows all items in category that are equal to size
                
+                /*
                 printf("Please input a category in all lowercases.\n");
                 scanf("\n%s",str);
                 cat = stringToEnum(str);//see top of file.
@@ -315,6 +319,8 @@ Here:
                         printf("%d %s %s %c %d %.2lf %d\n", items[i]->itemnum, enumToString[items[i]->category], items[i]->name, items[i]->size, items[i]->quantity, items[i]->cost, items[i]->onsale);
                 }
                 break;
+
+                */
             case 5:
                 // purchase item with itemnum
 
