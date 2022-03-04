@@ -8,35 +8,6 @@ int num_items = 0;
 // declaring the save function
 int save(char* filename);
 
-
-category stringToEnum(const char *str)
-{
-
-    category c;
-
-    if (strcmp(str, "clothes") == 0) {
-        c=clothes;
-    } else if (strcmp(str, "electronics") == 0) {
-        c = electronics;
-
-    } else if (strcmp(str, "tools") == 0) {
-        c = tools;
-
-    } else if (strcmp(str, "toys") == 0) {
-        c = toys;
-
-    } else {
-        printf("Unable to match the enum for category\n");
-        exit(5);
-    }
-
-    return c;
-
-}
-
-
-
-
 void adminCommands(char *inputFile, int numLines, int canRead) {
     // the users response to the switch statement
     int response;

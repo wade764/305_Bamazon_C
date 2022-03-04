@@ -224,7 +224,30 @@ void show_items(){
 // char s[100];
 // sprint_item(s, find_item_num(2));
 // printf(“%s\n”, s); // prints
-int sprint_item(char *s, item *c);
+int sprint_item(char *s, item *c)
+{
+    int n = (*c).itemnum ;
+    category cat = c->category;
+    char nam[MAX_ITEM_CHARS];
+    strcpy(nam,(*c).name);
+    char s2 = (*c).size;
+    int q = (*c).quantity;
+    double c2 = (*c).cost;
+    int o = (*c).onsale;
+
+    int result;
+    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
+
+
+    char c3 = enumToString[cat];
+    //the function below is a c library function that takes a string pointer (s in this case), and converts other data types and inputs them to that string.
+    result = sprintf(s,"Item Number: %d, Item Name: %s,Item Category: %s, Item Size: %c, Item Quantity: %d, Item Price: %lf, Item Sale Modifier: %d",n,nam,c3,s2,q,c2,o);
+
+    //prints to terminal.
+    printf("%s\n",s);
+
+    return result;
+}
 
 // Returns the an item* of itemnum .
 // Returns 0 if itemnum is not in the internal data structure.
@@ -260,8 +283,27 @@ item *find_item_num(int itemnum)
 // find_item_str(items, “o”); // items contains the following
 // 2 electronics computer x 3 100.000000 100
 // 4 toys barbie_doll x 13 4.350000 90
-int find_item_str(item **items, char *s);
+int find_item_str(item **items, char *s)
+{
 
+    int counter = 0;
+    int i=0;
+    char s[100];//declare a string
+    char *s2=&s;//declare a string pointer
+    int dummy;//dummy to hold return value of sprint_item
+
+    while(db[i] != NULL)//increment through db[]
+    {
+        if(strstr(db[i]->name,s))//check for substring s,
+        {
+            dummy = sprint_item(s2,db[i]);//print item.
+            items[counter]=db[i];
+            counter++;
+        }
+    }
+
+    return counter+1;//RETURNS NUMBER OF ELEMENTS, NOT MAX INDEX.
+}
 // Adds an item to the internal
 // data structure. If itemnum is already in the internal data structure, the values of
 // itemnum are updated; otherwise a new item is added.
@@ -510,6 +552,40 @@ item *delete_item(int itemNum) {
     // converts c to a string.
     // category_to_str mallocs memory for the resulting string.
     char *category_to_str(category c);
+    {
 
+        char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+
+        char result[] = enumToString[c];
+
+        char *r = &result;
+
+        return r;
+    }
     // converts the string s to a category .
-    category str_to_category(char *s);
+    category str_to_category(const char *str)
+    {
+
+        category c;
+
+        if (strcmp(str, "clothes") == 0) {
+            c=clothes;
+        } else if (strcmp(str, "electronics") == 0) {
+            c = electronics;
+
+        } else if (strcmp(str, "tools") == 0) {
+            c = tools;
+
+        } else if (strcmp(str, "toys") == 0) {
+            c = toys;
+
+        } else {
+            printf("Unable to match the enum for category\n");
+            exit(5);
+        }
+
+        return c;
+
+    }
+
+
