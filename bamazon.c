@@ -274,7 +274,10 @@ item *add_item(int itemnum, char *category, char *name, char size, int quantity,
     db[num_items] = malloc(sizeof(item));
 
     //char cat[20];
-    char name[MAX_ITEM_CHARS];
+
+    // NEEDED TO HAVE A DIFFERENT VARIABLE NAME HERE
+    //char name[MAX_ITEM_CHARS];
+    char nameTEMP[MAX_ITEM_CHARS];
 
 
     //scanf("%s %s %c %d %lf %d", cat, nam, &siz, &quan, &doub, &sale);
@@ -282,30 +285,34 @@ item *add_item(int itemnum, char *category, char *name, char size, int quantity,
     // the plus one is important because in this case num_items is an index starting at 0
     db[num_items]->itemnum = num_items+1;
 
-    if (strcmp(*category, "clothes") == 0) {
+    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
+
+    // this was strcmp(*category, "electronics")
+    if (strcmp(enumToString[db[num_items]->category], "clothes") == 0) {
         db[num_items]->category = clothes;
-    } else if (strcmp(*category, "electronics") == 0) {
+    } else if (strcmp(enumToString[db[num_items]->category], "electronics") == 0) {
         db[num_items]->category = electronics;
 
-    } else if (strcmp(*category, "tools") == 0) {
+    } else if (strcmp(enumToString[db[num_items]->category], "tools") == 0) {
         db[num_items]->category = tools;
 
-    } else if (strcmp(*category, "toys") == 0) {
+    } else if (strcmp(enumToString[db[num_items]->category], "toys") == 0) {
         db[num_items]->category = toys;
 
     } else {
         printf("Unable to match the enum for category\n");
         exit(5);
     }
-    strcpy(db[num_items]->name, name);
+    //strcpy(db[num_items]->name, name);
+    strcpy(db[num_items]->name, nameTEMP);
     db[num_items]->size = size;
     db[num_items]->quantity = quantity;
     db[num_items]->cost = cost;
     db[num_items]->onsale = onsale;
 
 
-
-    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
+    // moved this to above
+    //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
 
 
 
@@ -313,7 +320,7 @@ item *add_item(int itemnum, char *category, char *name, char size, int quantity,
     printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, enumToString[db[num_items]->category], db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
 
     num_items++;
-    
+
     return db[num_items];
 }
 
@@ -322,10 +329,13 @@ item *add_item(int itemnum, char *category, char *name, char size, int quantity,
 // items where each element is category c . Returns the number of elements in
 // items .
 int get_category(item **items, category c)
+    // MODIFIED
+    //int get_category(category c)
 {
 
-
+    // GCC SAYS ITS NOT BEING USED
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+
     int i = 0;                                                                                                                                                       
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
@@ -349,16 +359,17 @@ int get_category(item **items, category c)
 // the number of elements in items .
 int get_category_size(item **items, category c, char size)//pass **items by reference (&arrayName).
 {
-//The purpose of this function is to fill the array you give it with the items from the db that fit matching criteria.
-//it is up to main.c to use this information from the array that is modified in this function effectively.
-//
+    //The purpose of this function is to fill the array you give it with the items from the db that fit matching criteria.
+    //it is up to main.c to use this information from the array that is modified in this function effectively.
+    //
 
+    // GCC SAYS ITS NOT BEING USED
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
     int i = 0;                                                                                                                                                       
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
     {  
-        
+
         if(db[i]->category==c)
         {
             if(db[i]->size==size)
@@ -382,9 +393,10 @@ int get_category_size(item **items, category c, char size)//pass **items by refe
 // Returns the number of elements in items .
 int get_category_cost(item **items, category c, double cost)
 {
-//The purpose of this function is to fill the array you give it with the items from the db that fit matching criteria.
-//it is up to main.c to use this information from the array that is modified in this function effectively.
+    //The purpose of this function is to fill the array you give it with the items from the db that fit matching criteria.
+    //it is up to main.c to use this information from the array that is modified in this function effectively.
 
+    // GCC SAYS ITS NOT BEING USED
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
     int i = 0;                                                                                                                                                       
     int counter = 0;                                                                                                                                               
