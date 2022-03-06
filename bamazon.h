@@ -57,4 +57,6 @@ int checkout(char **receipt);
 
 char *category_to_str(category c);
 
-category str_to_category(char *s);
+// modified the function below
+category str_to_category(const char* str);
+//category str_to_category(char *s);

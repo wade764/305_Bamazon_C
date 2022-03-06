@@ -238,8 +238,11 @@ int sprint_item(char *s, item *c)
     int result;
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
 
+    // *** Modified this to the line below
+    //char c3 = enumToString[cat];
+    const char* c3 = enumToString[cat];
 
-    char c3 = enumToString[cat];
+
     //the function below is a c library function that takes a string pointer (s in this case), and converts other data types and inputs them to that string.
     result = sprintf(s,"Item Number: %d, Item Name: %s,Item Category: %s, Item Size: %c, Item Quantity: %d, Item Price: %lf, Item Sale Modifier: %d",n,nam,c3,s2,q,c2,o);
 
@@ -288,18 +291,26 @@ int find_item_str(item **items, char *s)
 
     int counter = 0;
     int i=0;
-    char s[100];//declare a string
-    char *s2=&s;//declare a string pointer
+
+    // *** Changed char s to char sChar
+
+    char sChar[100];//declare a string
+
+    // This needs to be fixed see line below
+    //char *s2=&sChar;//declare a string pointer
+    char *s2= malloc(sizeof(char)*100);//declare a string pointer
+    s2 = sChar;
+
     int dummy;//dummy to hold return value of sprint_item
 
     while(db[i] != NULL)//increment through db[]
     {
-        if(strstr(db[i]->name,s))//check for substring s,
-        {
-            dummy = sprint_item(s2,db[i]);//print item.
-            items[counter]=db[i];
-            counter++;
-        }
+        if(strstr(db[i]->name,sChar))//check for substring s,
+            {
+                dummy = sprint_item(s2,db[i]);//print item.
+                items[counter]=db[i];
+                counter++;
+            }
     }
 
     return counter+1;//RETURNS NUMBER OF ELEMENTS, NOT MAX INDEX.
@@ -551,16 +562,20 @@ item *delete_item(int itemNum) {
 
     // converts c to a string.
     // category_to_str mallocs memory for the resulting string.
-    char *category_to_str(category c);
+    char *category_to_str(category c)
     {
 
         char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
 
-        char result[] = enumToString[c];
+        // *** COMMENTING OUT FOR COMPILE
+        //char result[] = enumToString[c];
 
-        char *r = &result;
+        //char *r = &result;
 
-        return r;
+        //return r;
+
+        // dummy return
+        return 0;
     }
     // converts the string s to a category .
     category str_to_category(const char *str)
@@ -587,5 +602,3 @@ item *delete_item(int itemNum) {
         return c;
 
     }
-
-

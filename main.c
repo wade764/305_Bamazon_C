@@ -191,8 +191,11 @@ void userCommands(char *inputFile, int numLines, int canRead) {
     // the users response to the switch statement
     int response;
 
+    // *** COMMENTING OUT FOR COMPILE
     //category for user input.
-    category cat;
+    //category cat;
+
+
     //string for user input.
     char str[20];
     // will keep running commands until this is switched to 0
@@ -225,7 +228,9 @@ Here:
 
                 printf("Please input a category in all lowercases.\n");
                 scanf("\n%s",str);
-                cat = stringToEnum(str);//see top of file.
+
+                //*** I cant find this function?!
+                //cat = stringToEnum(str);//see top of file.
 
 
                 // For this one it is supposed to get all items by category,
