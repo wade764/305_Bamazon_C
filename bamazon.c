@@ -565,17 +565,28 @@ item *delete_item(int itemNum) {
     char *category_to_str(category c)
     {
 
-        char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
-
         // *** COMMENTING OUT FOR COMPILE
-        //char result[] = enumToString[c];
+        char result[15];
+        if(c==0)
+        {strcpy(result,"clothes");}
+        else if(c==1)
+        {strcpy(result,"electronics");}
+        else if (c==2)
+        {strcpy(result,"tools");}
+        else if (c==3)
+        {strcpy(result,"toys");}
+        else
+        {
+            printf("Could not resolve category in [category_to_str]");
+            return NULL;
 
-        //char *r = &result;
+        }
 
-        //return r;
+        char *r;
+        r=&result;
 
-        // dummy return
-        return 0;
+        return r;
+
     }
     // converts the string s to a category .
     category str_to_category(const char *str)
