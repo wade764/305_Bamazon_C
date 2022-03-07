@@ -60,10 +60,18 @@ Here:
 
                 break;
             case 2:
+                // Get the num of items incase user inputs an invalid entry
+                num_items = get_numItems();
+
                 // delete item by item number
                 printf("Please enter item number to delete from database: ");
                 scanf("%d",&itemNum);
                 printf("\n");
+                
+                if (itemNum > num_items){
+                    printf("%d is an invalid item number!\n",itemNum);
+                }else {
+
                 //shifting this value to an index
                 itemNum--;
 
@@ -76,6 +84,8 @@ Here:
                 //temp2 = delete_item(itemNum);
 
                 delete_item(itemNum);
+
+                }
 
                 // Test print
                 //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
