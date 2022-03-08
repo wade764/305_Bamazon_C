@@ -387,8 +387,6 @@ int get_category(item **items, category c)
 {
 
     // GCC SAYS ITS NOT BEING USED
-    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
-
     int i = 0;                                                                                                                                                       
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
@@ -402,8 +400,7 @@ int get_category(item **items, category c)
         }
 
         i++;                                                                                                                                                         
-    }                                                                                                                                                                
-
+    }           
     return counter;
 
 }
@@ -417,8 +414,7 @@ int get_category_size(item **items, category c, char size)//pass **items by refe
     //
 
     // GCC SAYS ITS NOT BEING USED
-    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
-    int i = 0;                                                                                                                                                       
+   int i = 0;                                                                                                                                                       
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
     {  

@@ -36,3 +36,4 @@
 36 toys legos x 13 35.00 100
 37 toys paddle_ball x 6 1.00 100
 38 toys test x 10 10.10 100
+39 clothes Aviators x 2 10.00 80

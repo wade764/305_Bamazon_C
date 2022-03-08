@@ -45,6 +45,12 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
         // used in case 5
         int saveSuccess;
 
+        //used in cases 7,8,9
+        category cat;
+        char str[MAX_ITEM_CHARS];
+        item **items[MAX_ITEMS];
+        char strResult[MAX_ITEM_CHARS];
+        char strptr=&str;
 Here:
         switch(response) {
             case 1: 
@@ -67,23 +73,23 @@ Here:
                 printf("Please enter item number to delete from database: ");
                 scanf("%d",&itemNum);
                 printf("\n");
-                
+
                 if (itemNum > num_items){
                     printf("%d is an invalid item number!\n",itemNum);
                 }else {
 
-                //shifting this value to an index
-                itemNum--;
+                    //shifting this value to an index
+                    itemNum--;
 
-                // I am not using the retuned item* in this case so I am commenting out
-                // DO NOT DELETE
-                // COMMENTING OUT FOR TEST
-                //item* temp2 = malloc(sizeof(item));
-                //temp2 = find_item_num(itemNum);
-                //// passing the itemNum -1 because it will be the index of the db[]
-                //temp2 = delete_item(itemNum);
+                    // I am not using the retuned item* in this case so I am commenting out
+                    // DO NOT DELETE
+                    // COMMENTING OUT FOR TEST
+                    //item* temp2 = malloc(sizeof(item));
+                    //temp2 = find_item_num(itemNum);
+                    //// passing the itemNum -1 because it will be the index of the db[]
+                    //temp2 = delete_item(itemNum);
 
-                delete_item(itemNum);
+                    delete_item(itemNum);
 
                 }
 
@@ -160,6 +166,23 @@ Here2:
                 break;
             case 8:
                 // shows all items that are category
+               
+                printf("please enter the category you'd like to search for\n");
+                scanf("%s",str);
+                printf("scanned: %s",str);
+                cat=str_to_category(strptr);
+                get_category(&items,cat);
+                printf("2");
+
+
+                int i = 0;
+                while(items[i]!=NULL)
+                {
+                    printf("in loop: %d",i);
+                    sprint_item(strptr,items[i]);
+                    printf("%s\n",strptr);
+                    i++;
+                }
 
                 break;
             case 9:
