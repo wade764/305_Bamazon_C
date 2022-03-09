@@ -167,13 +167,14 @@ Here2:
             case 8:
                 // shows all items that are category
                
-                printf("please enter the category you'd like to search for\n");
+                printf("please enter the category you'd like to search for");
                 scanf("%s",str);
+                printf("\n");
                 printf("scanned: %s",str);
                 cat=str_to_category(strptr);
                 get_category(&items,cat);
-                printf("2");
-
+                
+                //str++
 
                 int i = 0;
                 while(items[i]!=NULL)
