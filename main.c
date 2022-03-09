@@ -15,9 +15,6 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
     // will keep running commands until this is switched to 0
     int keepRunning = 1;
 
-    // used for write_db, tells if the item was sucessfully added to database
-    int addItem;
-
     while(keepRunning) {
         printf("Please select from the following options\n");
         printf("1. Add an item to DB\n"); //add itemnum temcategory itemname size quantity cost onsale
@@ -35,7 +32,18 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
 
         scanf("%d",&response);
 
-        // used for case 2, 3
+        // used for case 1
+        char categ[20];
+        char nam[MAX_ITEM_CHARS];
+        char siz;
+        int quan;
+        double doub;
+        int sale;
+
+        // used for case 1, 2, 3
+        // used for write_db, tells if the item was sucessfully added to database
+        //int addItem;
+        item* addItem;
         int itemNum;
         // used for case 3              
         int keepRunning = 1;
@@ -59,12 +67,20 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
         double costtt;
 Here:
         switch(response) {
-            case 1: 
+            case 1:
+                printf("cat name size quan price sale\n");
+
+                scanf("%d %s %s %c %d %lf %d",&itemNum,categ, nam, &siz, &quan, &doub, &sale);
+
                 // adding an item
-                addItem = write_db(inputFile);
+                //addItem = write_db(inputFile);
+                // removing 1 from the itemNum to match the index
+                addItem = add_item(itemNum-1,categ,nam,siz,quan,doub,sale);
                 num_items = get_numItems();
 
-                if (!addItem) {
+                //if (!addItem) {
+                // testing with the name, I am unsure how else you would test it the entire item was null in this case
+                if (addItem->name != NULL) {
                     printf("Item added sucessfully!\n");
                 } else {
                     printf("Could not add item!\n");
@@ -172,13 +188,13 @@ Here2:
                 break;
             case 8:
                 // shows all items that are category
-               
+
                 printf("please enter the category you'd like to search for:   ");
                 scanf("%s",str);
                 printf("\n");
                 cat=str_to_category(strptr);
                 get_category(items,cat);
-                
+
                 //str++
 
                 i = 0;
@@ -196,7 +212,7 @@ Here2:
                 scanf("%s",str);
                 printf("\n");
                 cat=str_to_category(strptr);
-                
+
 
                 printf("please enter the maximum cost to be used in search:   ");
                 scanf("%lf",&costtt);
@@ -212,7 +228,7 @@ Here2:
                     printf("\n");
                 }
                 printf("done!\n");
- 
+
                 break;
             case 10:
                 // show category size, shows all items in category that are equal to size
@@ -226,7 +242,7 @@ Here2:
                 scanf(" %c",&sizzz);
                 printf("\n");
                 get_category_size(items,cat,sizzz);
-                
+
 
                 i = 0;
                 while(items[i]!=NULL)
@@ -236,7 +252,7 @@ Here2:
                     printf("\n");
                 }
                 printf("done!\n");
- 
+
                 break;
             case 11:
                 // purchase item with itemnum
@@ -260,18 +276,18 @@ Here2:
                 printf("Invalid command!\n");
                 goto Here;
         }
+        }
+
     }
 
-}
 
+    void userCommands(char *inputFile, int numLines, int canRead) {
+        // the users response to the switch statement
+        int response;
 
-void userCommands(char *inputFile, int numLines, int canRead) {
-    // the users response to the switch statement
-    int response;
-
-    // *** COMMENTING OUT FOR COMPILE
-    //category for user input.
-    //category cat;
+        // *** COMMENTING OUT FOR COMPILE
+        //category for user input.
+        //category cat;
 
         //used in cases 3,4,5
         int i;
@@ -287,294 +303,294 @@ void userCommands(char *inputFile, int numLines, int canRead) {
         double costtt;
 
 
-    // will keep running commands until this is switched to 0
-    int keepRunning = 1;
+        // will keep running commands until this is switched to 0
+        int keepRunning = 1;
 
-    
-    while(keepRunning) {
 
-        printf("Please select from the following options\n");
-        printf("1. Print Database\n"); // shows all items in the database.
-        printf("2. Show items by category\n"); // shows all items that are category
-        printf("3. Show items in category less than a price\n"); // shows all items in category that cost less than cost
-        printf("4. Show items by category equal to size\n"); // shows all items in category that are equal to size
-        printf("5. Purchase item (by item number)\n"); // purchase item with itemnum
-        printf("6. Complete purchase and exit program (saves db)\n"); // quit and save
+        while(keepRunning) {
 
-        scanf("%d",&response);
+            printf("Please select from the following options\n");
+            printf("1. Print Database\n"); // shows all items in the database.
+            printf("2. Show items by category\n"); // shows all items that are category
+            printf("3. Show items in category less than a price\n"); // shows all items in category that cost less than cost
+            printf("4. Show items by category equal to size\n"); // shows all items in category that are equal to size
+            printf("5. Purchase item (by item number)\n"); // purchase item with itemnum
+            printf("6. Complete purchase and exit program (saves db)\n"); // quit and save
+
+            scanf("%d",&response);
 
 Here:
-        switch(response) {
-            case 1:
+            switch(response) {
+                case 1:
 
-                show_items();
+                    show_items();
 
-                break;
-            case 2:
-                // shows all items that are category
+                    break;
+                case 2:
+                    // shows all items that are category
 
-               
-                printf("please enter the category you'd like to search for:   ");
-                scanf("%s",str);
-                printf("\n");
-                cat=str_to_category(strptr);
-                get_category(items,cat);
-                
-                //str++
 
-                i = 0;
-                while(items[i]!=NULL)
-                {
-                    sprint_item(strptr,items[i]);
-                    i++;
+                    printf("please enter the category you'd like to search for:   ");
+                    scanf("%s",str);
                     printf("\n");
-                }
-                printf("done!\n");
-                break;
-          
+                    cat=str_to_category(strptr);
+                    get_category(items,cat);
 
-            case 3:
+                    //str++
 
-                printf("please enter the category you'd like to search for:   ");
-                scanf("%s",str);
-                printf("\n");
-                cat=str_to_category(strptr);
-                
-
-                printf("please enter the maximum cost to be used in search:   ");
-                scanf("%lf",&costtt);
-                printf("\n");
+                    i = 0;
+                    while(items[i]!=NULL)
+                    {
+                        sprint_item(strptr,items[i]);
+                        i++;
+                        printf("\n");
+                    }
+                    printf("done!\n");
+                    break;
 
 
-                get_category_cost(items,cat,costtt);
-                i = 0;
-                while(items[i]!=NULL)
-                {
-                    sprint_item(strptr,items[i]);
-                    i++;
+                case 3:
+
+                    printf("please enter the category you'd like to search for:   ");
+                    scanf("%s",str);
                     printf("\n");
-                }
-                printf("done!\n");
- 
-               break;
+                    cat=str_to_category(strptr);
 
 
-            case 4:
-
-                // show category size, shows all items in category that are equal to size
-                printf("please enter the category you'd like to search for:   ");
-                scanf("%s",str);
-                printf("\n");
-                cat=str_to_category(strptr);
-
-
-                printf("Please input the size you'd like to search for:   ");
-                scanf(" %c",&sizzz);
-                printf("\n");
-                get_category_size(items,cat,sizzz);
-                
-
-                i = 0;
-                while(items[i]!=NULL)
-                {
-                    sprint_item(strptr,items[i]);
-                    i++;
+                    printf("please enter the maximum cost to be used in search:   ");
+                    scanf("%lf",&costtt);
                     printf("\n");
-                }
-                printf("done!\n");
- 
 
-               break;
-            case 5:
-                // purchase item with itemnum
 
-                break;
-            case 6:
-                // exits program and saves to the database
-                // The shopper can only change the database by purchasing items
-                exit(0);
+                    get_category_cost(items,cat,costtt);
+                    i = 0;
+                    while(items[i]!=NULL)
+                    {
+                        sprint_item(strptr,items[i]);
+                        i++;
+                        printf("\n");
+                    }
+                    printf("done!\n");
 
-                break;
-            default:
-                printf("Invalid command!\n");
-                goto Here;
-        }
-    }
-}
+                    break;
 
-// returns the total number of lines in the file
-int lineCount( char *filename) {
-    // The following code was modified from the source below
-    // https://www.tutorialspoint.com/c-program-to-count-the-number-of-lines-in-a-file
 
-    char ch;
-    int numLines = 0;
+                case 4:
 
-    //open file in read more
-    FILE *fp = fopen(filename, "r");
-    // returning 0 instead of -1 
-    if(fp == NULL) {
-        printf("File \"%s\" does not exist!!!\n",filename);
-        return 0;
-    }
-    //read character by character and check for new line
-    while((ch = fgetc(fp))!=EOF) {
-        if(ch == '\n')
-            numLines++;
-    }
-    //close the file
-    fclose(fp);
+                    // show category size, shows all items in category that are equal to size
+                    printf("please enter the category you'd like to search for:   ");
+                    scanf("%s",str);
+                    printf("\n");
+                    cat=str_to_category(strptr);
 
-    //print number of lines
-    //printf("Total number of lines are: %d\n",/*linesCount*/numLines);
-    return numLines;
-}
 
-// currently using delete_item in bamazon.c
+                    printf("Please input the size you'd like to search for:   ");
+                    scanf(" %c",&sizzz);
+                    printf("\n");
+                    get_category_size(items,cat,sizzz);
 
-//void deleteItem (int itemNum)// 11. b.
-//{
-//
-//    //need to design data structure before this.
-//
-//}
 
-// creating a function that will save the database to the output file
-// returns 0 for good write and -1 for bad
-int save(char* filename) //11. e.
-{
-    // used for writing the correct number to the file
-    int addMe = 0;
+                    i = 0;
+                    while(items[i]!=NULL)
+                    {
+                        sprint_item(strptr,items[i]);
+                        i++;
+                        printf("\n");
+                    }
+                    printf("done!\n");
 
-    int num_items = get_numItems();
-    item* temp5[MAX_ITEMS];
 
-    // referenced the following source for fopen
-    // https://www.tutorialspoint.com/c_standard_library/c_function_fopen.htm
+                    break;
+                case 5:
+                    // purchase item with itemnum
 
-    FILE *fout = fopen(filename, "w"); // "w" Creates an empty file for writing. If a file with the same name already exists, its content is erased and the file is considered as a new empty file.
-    // 'a' appends to the end of the file
+                    break;
+                case 6:
+                    // exits program and saves to the database
+                    // The shopper can only change the database by purchasing items
+                    exit(0);
 
-    if(filename!=NULL){
-
-        // TEST
-        //printf("This is num_items in save main.c: %d\n", num_items);
-
-        for (int i = 0; i < num_items; i++) {
-
-            temp5[i] = malloc(sizeof(item));
-            temp5[i] = find_item_num(i);
-
-            // TEST
-            //printf("In save, after find_item_num\n");
-
-            char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
-
-            // To avoid a seg fault if the item is null, then you skip else it writes to the file
-            if (temp5[i] == NULL) {
-                addMe++;
-                //printf("In save, the item is NULL and addMe is: %d\n",addMe);
-            } else {
-
-                // subtracting addMe to get the item number to line up right
-                fprintf(fout, "%d %s %s %c %d %.2lf %d\n", (temp5[i]->itemnum)-addMe, enumToString[temp5[i]->category], temp5[i]->name, temp5[i]->size, temp5[i]->quantity, temp5[i]->cost, temp5[i]->onsale);
+                    break;
+                default:
+                    printf("Invalid command!\n");
+                    goto Here;
             }
         }
-
-        fclose(fout);//close when done!
-
-        //// Test statement
-        //printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
-
-        return 0;
-    } else {
-        // The file was not written sucessfully...
-        return -1;
-    }
-}
-
-int main(int argc, char **argv) {
-
-    char* inputFile;
-    // making sure the program has a file as its 2nd command
-    if (argc == 1) { // The database file is missing
-        printf("File not found!\n");
-        exit(1);
-    } else if (argc > 2) { // The number of arguments is too long
-        printf("File not found!\n");
-        exit(2);
-    } else if (argc == 2) {
-        //printf("The database provided is called %s\n", argv[1]);
-        inputFile = argv[1];
     }
 
-    int numLines = lineCount(inputFile);
-    // There was an issue reading the number of lines so the program exits if numlines is 0
-    if (!numLines) {
-        exit(6);
+    // returns the total number of lines in the file
+    int lineCount( char *filename) {
+        // The following code was modified from the source below
+        // https://www.tutorialspoint.com/c-program-to-count-the-number-of-lines-in-a-file
+
+        char ch;
+        int numLines = 0;
+
+        //open file in read more
+        FILE *fp = fopen(filename, "r");
+        // returning 0 instead of -1 
+        if(fp == NULL) {
+            printf("File \"%s\" does not exist!!!\n",filename);
+            return 0;
+        }
+        //read character by character and check for new line
+        while((ch = fgetc(fp))!=EOF) {
+            if(ch == '\n')
+                numLines++;
+        }
+        //close the file
+        fclose(fp);
+
+        //print number of lines
+        //printf("Total number of lines are: %d\n",/*linesCount*/numLines);
+        return numLines;
     }
 
-    // passing the file pointer and the number of lines in the program
-    // *** we want to only read the database once!!!
-    int canRead = read_db(inputFile, numLines);
+    // currently using delete_item in bamazon.c
 
-    // test
-    //printf("0 is good, -1 is bad: %d\n",canRead);
+    //void deleteItem (int itemNum)// 11. b.
+    //{
+    //
+    //    //need to design data structure before this.
+    //
+    //}
 
-    // The file could not be read in read_db if canRead is anything but 0
-    if (canRead) {
-        printf("File not found!");
+    // creating a function that will save the database to the output file
+    // returns 0 for good write and -1 for bad
+    int save(char* filename) //11. e.
+    {
+        // used for writing the correct number to the file
+        int addMe = 0;
+
+        int num_items = get_numItems();
+        item* temp5[MAX_ITEMS];
+
+        // referenced the following source for fopen
+        // https://www.tutorialspoint.com/c_standard_library/c_function_fopen.htm
+
+        FILE *fout = fopen(filename, "w"); // "w" Creates an empty file for writing. If a file with the same name already exists, its content is erased and the file is considered as a new empty file.
+        // 'a' appends to the end of the file
+
+        if(filename!=NULL){
+
+            // TEST
+            //printf("This is num_items in save main.c: %d\n", num_items);
+
+            for (int i = 0; i < num_items; i++) {
+
+                temp5[i] = malloc(sizeof(item));
+                temp5[i] = find_item_num(i);
+
+                // TEST
+                //printf("In save, after find_item_num\n");
+
+                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};
+
+                // To avoid a seg fault if the item is null, then you skip else it writes to the file
+                if (temp5[i] == NULL) {
+                    addMe++;
+                    //printf("In save, the item is NULL and addMe is: %d\n",addMe);
+                } else {
+
+                    // subtracting addMe to get the item number to line up right
+                    fprintf(fout, "%d %s %s %c %d %.2lf %d\n", (temp5[i]->itemnum)-addMe, enumToString[temp5[i]->category], temp5[i]->name, temp5[i]->size, temp5[i]->quantity, temp5[i]->cost, temp5[i]->onsale);
+                }
+            }
+
+            fclose(fout);//close when done!
+
+            //// Test statement
+            //printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, cat, db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
+
+            return 0;
+        } else {
+            // The file was not written sucessfully...
+            return -1;
+        }
     }
 
-    // valid users
-    char admin[] = "bamazon";
-    char shopper[] = "shopper";
+    int main(int argc, char **argv) {
 
-    // First prompt is Enter user name:
-    char userName[8];
-    // This can only use letters and numbers NO SPACES!
-    printf("Enter user name (bamazon or shopper): ");
-    //printf("Enter user name: ");
-    fgets(userName,8,stdin);
-    printf("\n");
+        char* inputFile;
+        // making sure the program has a file as its 2nd command
+        if (argc == 1) { // The database file is missing
+            printf("File not found!\n");
+            exit(1);
+        } else if (argc > 2) { // The number of arguments is too long
+            printf("File not found!\n");
+            exit(2);
+        } else if (argc == 2) {
+            //printf("The database provided is called %s\n", argv[1]);
+            inputFile = argv[1];
+        }
 
-    // Test
-    //printf("This is user name: %s\n",userName);
-
-    // strcmp returns anything other than 0 it will exit
-    int validUser1 = strcmp(userName, admin);
-    int validUser2 = strcmp(userName, shopper);
-    //printf("strcmp admin: %d shopper: %d\n",validUser1,validUser2);
-
-    // The following commands are for the admin account - bamazon
-    if (!validUser1) {
-        // validUser1 == 0 so it is the admin account
-        // now we need to move to the admin commands
-        numLines = lineCount(inputFile);
+        int numLines = lineCount(inputFile);
         // There was an issue reading the number of lines so the program exits if numlines is 0
         if (!numLines) {
             exit(6);
         }
-        adminCommands(inputFile, numLines, canRead);
 
-    } else if (!validUser2) {
-        // validUser2 == 0  so it is the shopper account
-        // now we need to move to the shopper commands
-        numLines = lineCount(inputFile);
-        // There was an issue reading the number of lines so the program exits if numlines is 0
-        if (!numLines) {
-            exit(6);
+        // passing the file pointer and the number of lines in the program
+        // *** we want to only read the database once!!!
+        int canRead = read_db(inputFile, numLines);
+
+        // test
+        //printf("0 is good, -1 is bad: %d\n",canRead);
+
+        // The file could not be read in read_db if canRead is anything but 0
+        if (canRead) {
+            printf("File not found!");
         }
-        userCommands(inputFile, numLines, canRead);
 
-        // The last two else if's are for invalid user names
-    } else if (validUser1) {
-        // not a valid user
-        printf("Invalid user!\n");
-        exit(3);
-    } else if (validUser2) {
-        // not a valid user
-        printf("Invalid user!\n");
-        exit(3);
+        // valid users
+        char admin[] = "bamazon";
+        char shopper[] = "shopper";
+
+        // First prompt is Enter user name:
+        char userName[8];
+        // This can only use letters and numbers NO SPACES!
+        printf("Enter user name (bamazon or shopper): ");
+        //printf("Enter user name: ");
+        fgets(userName,8,stdin);
+        printf("\n");
+
+        // Test
+        //printf("This is user name: %s\n",userName);
+
+        // strcmp returns anything other than 0 it will exit
+        int validUser1 = strcmp(userName, admin);
+        int validUser2 = strcmp(userName, shopper);
+        //printf("strcmp admin: %d shopper: %d\n",validUser1,validUser2);
+
+        // The following commands are for the admin account - bamazon
+        if (!validUser1) {
+            // validUser1 == 0 so it is the admin account
+            // now we need to move to the admin commands
+            numLines = lineCount(inputFile);
+            // There was an issue reading the number of lines so the program exits if numlines is 0
+            if (!numLines) {
+                exit(6);
+            }
+            adminCommands(inputFile, numLines, canRead);
+
+        } else if (!validUser2) {
+            // validUser2 == 0  so it is the shopper account
+            // now we need to move to the shopper commands
+            numLines = lineCount(inputFile);
+            // There was an issue reading the number of lines so the program exits if numlines is 0
+            if (!numLines) {
+                exit(6);
+            }
+            userCommands(inputFile, numLines, canRead);
+
+            // The last two else if's are for invalid user names
+        } else if (validUser1) {
+            // not a valid user
+            printf("Invalid user!\n");
+            exit(3);
+        } else if (validUser2) {
+            // not a valid user
+            printf("Invalid user!\n");
+            exit(3);
+        }
     }
-}

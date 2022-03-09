@@ -55,7 +55,6 @@ item *update_item(int itemnum, category category, char *name, char size, int qua
     db[itemnum]->onsale = onsale;
 
     return db[itemnum];
-
 }
 
 // Reads the database filename into the
@@ -101,7 +100,6 @@ int read_db(char *filename, int numLines) {
 
             //printf("In read_db in while here is i: %d\n",i);
         } 
-
         //printf("about to return in read_db\n");
 
         fclose(fin);
@@ -315,10 +313,8 @@ int find_item_str(item **items, char *s)
 
     return counter+1;//RETURNS NUMBER OF ELEMENTS, NOT MAX INDEX.
 }
-// Adds an item to the internal
-// data structure. If itemnum is already in the internal data structure, the values of
-// itemnum are updated; otherwise a new item is added.
-item *add_item(int itemnum, char *category, char *name, char size, int quantity, double cost, int onsale)
+// Adds an item to the internal data structure.
+item *add_item(int itemnum, char* category, char *name, char size, int quantity, double cost, int onsale)
 {
 
     //how do we check for if the item is already here?
@@ -340,34 +336,50 @@ item *add_item(int itemnum, char *category, char *name, char size, int quantity,
 
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
 
-    // this was strcmp(*category, "electronics")
-    if (strcmp(enumToString[db[num_items]->category], "clothes") == 0) {
+
+    if (strcmp(category, "clothes") == 0) {
         db[num_items]->category = clothes;
-    } else if (strcmp(enumToString[db[num_items]->category], "electronics") == 0) {
+    } else if (strcmp(category, "electronics") == 0) {
         db[num_items]->category = electronics;
 
-    } else if (strcmp(enumToString[db[num_items]->category], "tools") == 0) {
+    } else if (strcmp(category, "tools") == 0) {
         db[num_items]->category = tools;
 
-    } else if (strcmp(enumToString[db[num_items]->category], "toys") == 0) {
+    } else if (strcmp(category, "toys") == 0) {
         db[num_items]->category = toys;
-
     } else {
         printf("Unable to match the enum for category\n");
         exit(5);
     }
-    //strcpy(db[num_items]->name, name);
-    strcpy(db[num_items]->name, nameTEMP);
+    strcpy(db[num_items]->name, name);
     db[num_items]->size = size;
     db[num_items]->quantity = quantity;
     db[num_items]->cost = cost;
     db[num_items]->onsale = onsale;
+    // Commented out 09MAR
+    // this was strcmp(*category, "electronics")
+    //if (strcmp(enumToString[db[num_items]->category], "clothes") == 0) {
+    //    db[num_items]->category = clothes;
+    //} else if (strcmp(enumToString[db[num_items]->category], "electronics") == 0) {
+    //    db[num_items]->category = electronics;
 
+    //} else if (strcmp(enumToString[db[num_items]->category], "tools") == 0) {
+    //    db[num_items]->category = tools;
 
-    // moved this to above
-    //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
+    //} else if (strcmp(enumToString[db[num_items]->category], "toys") == 0) {
+    //    db[num_items]->category = toys;
 
+    //} else {
+    //    printf("Unable to match the enum for category\n");
+    //    exit(5);
+    //}
 
+    //strcpy(db[num_items]->name, name);
+    //strcpy(db[num_items]->name, nameTEMP);
+    //db[num_items]->size = size;
+    //db[num_items]->quantity = quantity;
+    //db[num_items]->cost = cost;
+    //db[num_items]->onsale = onsale;
 
     // Test statement
     printf("%d %s %s %c %d %.2lf %d\n", db[num_items]->itemnum, enumToString[db[num_items]->category], db[num_items]->name, db[num_items]->size, db[num_items]->quantity, db[num_items]->cost, db[num_items]->onsale);
@@ -376,7 +388,6 @@ item *add_item(int itemnum, char *category, char *name, char size, int quantity,
 
     return db[num_items];
 }
-
 
 // Fills in the *item[] with
 // items where each element is category c . Returns the number of elements in
@@ -440,7 +451,7 @@ int get_category_size(item **items, category c, char sizee)//pass **items by ref
                 items[counter]=db[i];
                 counter++;
             }
-            
+
         }
         i++;
     }
