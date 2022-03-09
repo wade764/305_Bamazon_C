@@ -50,7 +50,7 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
         char str[MAX_ITEM_CHARS];
         item **items[MAX_ITEMS];
         char strResult[MAX_ITEM_CHARS];
-        char strptr=&str;
+        char* strptr=str;
 Here:
         switch(response) {
             case 1: 
