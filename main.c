@@ -49,7 +49,7 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
         int i;
         category cat;
         char str[MAX_ITEM_CHARS];
-        item **items[MAX_ITEMS];
+        item *items[MAX_ITEMS];
         char strResult[MAX_ITEM_CHARS];
         char* strptr=str;
         //used in case 9
@@ -177,7 +177,7 @@ Here2:
                 scanf("%s",str);
                 printf("\n");
                 cat=str_to_category(strptr);
-                get_category(&items,cat);
+                get_category(items,cat);
                 
                 //str++
 
@@ -199,11 +199,11 @@ Here2:
                 
 
                 printf("please enter the maximum cost to be used in search:   ");
-                scanf("%lf",costtt);
+                scanf("%lf",&costtt);
                 printf("\n");
 
 
-                get_category_cost(&items,cat,costtt);
+                get_category_cost(items,cat,costtt);
                 i = 0;
                 while(items[i]!=NULL)
                 {
@@ -223,9 +223,9 @@ Here2:
 
 
                 printf("Please input the size you'd like to search for:   ");
-                scanf(" %c",sizzz);
+                scanf(" %c",&sizzz);
                 printf("\n");
-                get_category_size(&items,cat,sizzz);
+                get_category_size(items,cat,sizzz);
                 
 
                 i = 0;
