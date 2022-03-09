@@ -42,9 +42,9 @@ item *add_item(int itemnum, char* category, char *name, char size, int quantity,
 item *update_item(int itemnum, category category, char *name, char size,int quantity, double cost, int onsale);
 
 int get_category(item **items, category c);
+
 // modified this to only take the category
 //int get_category(item **items, category c);
-
 int get_category_size(item **items, category c, char size);
 
 int get_category_cost(item **items, category c, double cost);
@@ -58,5 +58,5 @@ int checkout(char **receipt);
 char *category_to_str(category c);
 
 // modified the function below
-category str_to_category(const char* str);
 //category str_to_category(char *s);
+category str_to_category(const char* str);
