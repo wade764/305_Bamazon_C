@@ -14,12 +14,13 @@ static int num_items = 0;
 // This data structure contains the
 // items purchased by a shopper.
 // MAX_PURCHASE = 10
-static item *purchased[MAX_PURCHASE];
 
+//*** NOT USED WE DID NOT COMPLETE THE PURCHASE FUNCTION
 // This is the number of items purchased.
 // purchased_items is initially assigned 0, it is incremented on each call to
 // purchase_item , and it is assigned 0 on the call to checkout .
-static int purchased_items = 0;
+//static int purchased_items = 0;
+//static item *purchased[MAX_PURCHASE];
 
 // function added to return num_items
 int get_numItems() {
@@ -243,13 +244,14 @@ int find_item_str(item **items, char *s)
     char *s2= malloc(sizeof(char)*100);//declare a string pointer
     s2 = sChar;
 
-    int dummy;//dummy to hold return value of sprint_item
+    //int dummy;//dummy to hold return value of sprint_item
 
     while(db[i] != NULL)//increment through db[]
     {
         if(strstr(db[i]->name,sChar))//check for substring s,
             {
-                dummy = sprint_item(s2,db[i]);//print item.
+                //dummy = sprint_item(s2,db[i]);//print item.
+                sprint_item(s2,db[i]);//print item.
                 items[counter]=db[i];
                 counter++;
             }
@@ -262,12 +264,12 @@ item *add_item(int itemnum, char* category, char *name, char size, int quantity,
 {
     db[num_items] = malloc(sizeof(item));
 
-    char nameTEMP[MAX_ITEM_CHARS];
+    //char nameTEMP[MAX_ITEM_CHARS];
 
     // the plus one is important because in this case num_items is an index starting at 0
     db[num_items]->itemnum = num_items+1;
 
-    char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
+    //char const* enumToString[] = { "clothes", "electronics", "tools", "toys"};                                                                                  
 
     if (strcmp(category, "clothes") == 0) {
         db[num_items]->category = clothes;
@@ -467,7 +469,7 @@ char *category_to_str(category c)
     }
 
     char *r;
-    r=&result;
+    r=&result[0];
 
     return r;
 }

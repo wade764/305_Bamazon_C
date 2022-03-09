@@ -53,7 +53,7 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
         category cat;
         char str[MAX_ITEM_CHARS];
         item *items[MAX_ITEMS];
-        char strResult[MAX_ITEM_CHARS];
+        //char strResult[MAX_ITEM_CHARS];
         char* strptr=str;
         //used in case 9
         char sizzz;
@@ -255,7 +255,7 @@ void userCommands(char *inputFile, int numLines, int canRead) {
     category cat;
     char str[MAX_ITEM_CHARS];
     item *items[MAX_ITEMS];
-    char strResult[MAX_ITEM_CHARS];
+    //char strResult[MAX_ITEM_CHARS];
     char* strptr=str;
     //used in case 5
     char sizzz;
