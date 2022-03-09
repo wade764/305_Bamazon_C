@@ -273,15 +273,24 @@ void userCommands(char *inputFile, int numLines, int canRead) {
     //category for user input.
     //category cat;
 
+        //used in cases 3,4,5
+        int i;
+        category cat;
+        char str[MAX_ITEM_CHARS];
+        item *items[MAX_ITEMS];
+        char strResult[MAX_ITEM_CHARS];
+        char* strptr=str;
+        //used in case 5
+        char sizzz;
 
-    //string for user input.
-    char str[20];
+        //used in case 4
+        double costtt;
+
+
     // will keep running commands until this is switched to 0
     int keepRunning = 1;
 
-    //used for filling with input from bamazon.c
-    item **items[MAX_ITEMS];
-
+    
     while(keepRunning) {
 
         printf("Please select from the following options\n");
@@ -304,90 +313,78 @@ Here:
             case 2:
                 // shows all items that are category
 
-                printf("Please input a category in all lowercases.\n");
-                scanf("\n%s",str);
+               
+                printf("please enter the category you'd like to search for:   ");
+                scanf("%s",str);
+                printf("\n");
+                cat=str_to_category(strptr);
+                get_category(items,cat);
+                
+                //str++
 
-                //*** I cant find this function?!
-                //cat = stringToEnum(str);//see top of file.
-
-
-                // For this one it is supposed to get all items by category,
-                // the items are in bamazon called item* db[MAX_ITEM] I do not think the way we
-                // have our program set up  that we can use this idea of sending another array of item pointer item pointers
-                // I would like to modify the program so that we send get_category a category c and in bamazon.c
-                // we would print all the items by category in the get_category function
-
-                //int numItems = get_category(&items,cat);//(item**items,category c)
-
-                // MODIFIED
-                //int numItems = get_category(cat);//(item**items,category c)
-
-
-                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
-
-                // ADDED THIS HERE AND CHANGED numItems to num_items
-                num_items = get_numItems();
-                //for (int i = 0; i < numItems; i++)
-                for (int i = 0; i < num_items; i++)
+                i = 0;
+                while(items[i]!=NULL)
                 {
-                    // before it was items[i]->itemnum but because it is an array within an array you must first dereference the first array then the second like below
-                    printf("%d %s %s %c %d %.2lf %d\n", (*items[i])->itemnum, enumToString[(*items[i])->category], (*items[i])->name, (*items[i])->size, (*items[i])->quantity, (*items[i])->cost, (*items[i])->onsale);
+                    sprint_item(strptr,items[i]);
+                    i++;
+                    printf("\n");
                 }
+                printf("done!\n");
                 break;
+          
 
             case 3:
 
-                /*
-                // shows all items in category that cost less than user defined cost
-                //gather category from user
-                printf("Please input a category in all lowercases.\n");
-                scanf("\n%s",str);
-                cat = stringToEnum(str);//see top of file.
+                printf("please enter the category you'd like to search for:   ");
+                scanf("%s",str);
+                printf("\n");
+                cat=str_to_category(strptr);
+                
 
-                //gather cost from user
-                double costReply;
-                printf("Now please input a decimal value for a price limit on items shown to you.\n");
-                scanf("\n%lf",costReply);
-
-                //operate
-                int numItems = get_category_cost(&items,cat,costReply);//(item**items,category c)
+                printf("please enter the maximum cost to be used in search:   ");
+                scanf("%lf",&costtt);
+                printf("\n");
 
 
-                //present data.
-                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
-                for (int i = 0; i < numItems; i++)
+                get_category_cost(items,cat,costtt);
+                i = 0;
+                while(items[i]!=NULL)
                 {
-                printf("%d %s %s %c %d %.2lf %d\n", *items[i]->itemnum, enumToString[*items[i]->category], *items[i]->name, items[i]->size, items[i]->quantity, items[i]->cost, items[i]->onsale);
-                } 
-                 */
-                break;
+                    sprint_item(strptr,items[i]);
+                    i++;
+                    printf("\n");
+                }
+                printf("done!\n");
+ 
+               break;
 
 
             case 4:
+
                 // show category size, shows all items in category that are equal to size
-
-                /*
-                   printf("Please input a category in all lowercases.\n");
-                   scanf("\n%s",str);
-                   cat = stringToEnum(str);//see top of file.
-
-                //gather size input
-                char sizz[1];
-                printf("Please input desired size.");
-                scanf("\n%c",sizz);
-
-                int numItems = get_category_size(items,cat,sizz);//(item**items,category c)
+                printf("please enter the category you'd like to search for:   ");
+                scanf("%s",str);
+                printf("\n");
+                cat=str_to_category(strptr);
 
 
-                char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
+                printf("Please input the size you'd like to search for:   ");
+                scanf(" %c",&sizzz);
+                printf("\n");
+                get_category_size(items,cat,sizzz);
+                
 
-                for (int i = 0; i < numItems; i++)
+                i = 0;
+                while(items[i]!=NULL)
                 {
-                printf("%d %s %s %c %d %.2lf %d\n", items[i]->itemnum, enumToString[items[i]->category], items[i]->name, items[i]->size, items[i]->quantity, items[i]->cost, items[i]->onsale);
+                    sprint_item(strptr,items[i]);
+                    i++;
+                    printf("\n");
                 }
-                break;
+                printf("done!\n");
+ 
 
-                 */
+               break;
             case 5:
                 // purchase item with itemnum
 
