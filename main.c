@@ -45,12 +45,18 @@ void adminCommands(char *inputFile, int numLines, int canRead) {
         // used in case 5
         int saveSuccess;
 
-        //used in cases 7,8,9
+        //used in cases 8,9,10
+        int i;
         category cat;
         char str[MAX_ITEM_CHARS];
         item **items[MAX_ITEMS];
         char strResult[MAX_ITEM_CHARS];
         char* strptr=str;
+        //used in case 9
+        char sizzz;
+
+        //used in case 10
+        double costtt;
 Here:
         switch(response) {
             case 1: 
@@ -167,32 +173,70 @@ Here2:
             case 8:
                 // shows all items that are category
                
-                printf("please enter the category you'd like to search for");
+                printf("please enter the category you'd like to search for:   ");
                 scanf("%s",str);
                 printf("\n");
-                printf("scanned: %s",str);
                 cat=str_to_category(strptr);
                 get_category(&items,cat);
                 
                 //str++
 
-                int i = 0;
+                i = 0;
                 while(items[i]!=NULL)
                 {
-                    printf("in loop: %d",i);
                     sprint_item(strptr,items[i]);
-                    printf("%s\n",strptr);
                     i++;
+                    printf("\n");
                 }
-
+                printf("done!\n");
                 break;
             case 9:
                 // shows all items in category that cost less than user defined cost
+                printf("please enter the category you'd like to search for:   ");
+                scanf("%s",str);
+                printf("\n");
+                cat=str_to_category(strptr);
+                
 
+                printf("please enter the maximum cost to be used in search:   ");
+                scanf("%lf",costtt);
+                printf("\n");
+
+
+                get_category_cost(&items,cat,costtt);
+                i = 0;
+                while(items[i]!=NULL)
+                {
+                    sprint_item(strptr,items[i]);
+                    i++;
+                    printf("\n");
+                }
+                printf("done!\n");
+ 
                 break;
             case 10:
                 // show category size, shows all items in category that are equal to size
+                printf("please enter the category you'd like to search for:   ");
+                scanf("%s",str);
+                printf("\n");
+                cat=str_to_category(strptr);
 
+
+                printf("Please input the size you'd like to search for:   ");
+                scanf(" %c",sizzz);
+                printf("\n");
+                get_category_size(&items,cat,sizzz);
+                
+
+                i = 0;
+                while(items[i]!=NULL)
+                {
+                    sprint_item(strptr,items[i]);
+                    i++;
+                    printf("\n");
+                }
+                printf("done!\n");
+ 
                 break;
             case 11:
                 // purchase item with itemnum

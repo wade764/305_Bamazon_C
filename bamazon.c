@@ -385,7 +385,14 @@ int get_category(item **items, category c)
     // MODIFIED
     //int get_category(category c)
 {
+    int j = 0;
+    while(items[j]!=NULL)//this loop cleans up any "leftovers" in the array from any previous usage.
+    {
 
+        items[j]=NULL;
+        j++;
+
+    }
     // GCC SAYS ITS NOT BEING USED
     int i = 0;                                                                                                                                                       
     int counter = 0;                                                                                                                                               
@@ -400,7 +407,8 @@ int get_category(item **items, category c)
         }
 
         i++;                                                                                                                                                         
-    }           
+    }
+    
     return counter;
 
 }
@@ -412,9 +420,17 @@ int get_category_size(item **items, category c, char size)//pass **items by refe
     //The purpose of this function is to fill the array you give it with the items from the db that fit matching criteria.
     //it is up to main.c to use this information from the array that is modified in this function effectively.
     //
+    int j = 0;
+    while(items[j]!=NULL)//this loop cleans up any "leftovers" in the array from any previous usage.
+    {
 
+        items[j]=NULL;
+        j++;
+
+    }
+ 
     // GCC SAYS ITS NOT BEING USED
-   int i = 0;                                                                                                                                                       
+    int i = 0;                                                                                                                                                       
     int counter = 0;                                                                                                                                               
     while(db[i] != NULL)                                                                                                                                             
     {  
@@ -444,7 +460,15 @@ int get_category_cost(item **items, category c, double cost)
 {
     //The purpose of this function is to fill the array you give it with the items from the db that fit matching criteria.
     //it is up to main.c to use this information from the array that is modified in this function effectively.
+    int j = 0;
+    while(items[j]!=NULL)//this loop cleans up any "leftovers" in the array from any previous usage.
+    {
 
+        items[j]=NULL;
+        j++;
+
+    }
+ 
     // GCC SAYS ITS NOT BEING USED
     char const* enumToString[] = { "clothes", "electronics", "tools", "toys"}; 
     int i = 0;                                                                                                                                                       
